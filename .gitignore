@@ -96,3 +96,6 @@ lint/tmp/
 
 # Mac
 .DS_Store
+
+# Custom
+docs/local/*
