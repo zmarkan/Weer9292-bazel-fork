@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+// Load keystore: https://android.jlelse.eu/where-to-store-android-keystore-file-in-ci-cd-cycle-2365f4e02e57
+def keystorePropertiesFile = file(keystorePropertiesPath9292Android)
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -16,10 +21,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['signing.store.file'])
+            storePassword keystoreProperties['signing.store.password']
+            keyAlias keystoreProperties['signing.key.alias.weer9292.android']
+            keyPassword keystoreProperties['signing.key.password.weer9292.android']
+        }
+        debug {
+            storeFile file('../keystores/debug.keystore')
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         acceptance {
             initWith release
@@ -29,6 +48,7 @@ android {
             versionNameSuffix "-ACCP"
         }
         debug {
+            signingConfig signingConfigs.debug
             applicationIdSuffix ".debug"
             versionNameSuffix "-DEBUG"
         }
