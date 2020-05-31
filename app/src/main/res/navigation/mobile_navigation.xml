@@ -13,14 +13,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="nl.tcilegnar.weer9292.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_forecast"
+        android:name="nl.tcilegnar.weer9292.ui.forecast.ForecastFragment"
+        android:label="@string/title_forecast"
+        tools:layout="@layout/fragment_forecast" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="nl.tcilegnar.weer9292.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_radar"
+        android:name="nl.tcilegnar.weer9292.ui.radar.RadarFragment"
+        android:label="@string/title_radar"
+        tools:layout="@layout/fragment_radar" />
 </navigation>

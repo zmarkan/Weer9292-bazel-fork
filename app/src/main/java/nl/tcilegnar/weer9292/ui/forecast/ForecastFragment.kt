@@ -1,4 +1,4 @@
-package nl.tcilegnar.weer9292.ui.home
+package nl.tcilegnar.weer9292.ui.forecast
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,25 +7,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_forecast.*
 import nl.tcilegnar.weer9292.R
 
-class HomeFragment : Fragment() {
-    private lateinit var homeViewModel: HomeViewModel
+class ForecastFragment : Fragment() {
+    private lateinit var forecastViewModel: ForecastViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        forecastViewModel = ViewModelProvider(this).get(ForecastViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_forecast, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.text.observe(this, Observer {
-            text_home.text = it
+        forecastViewModel.text.observe(this, Observer {
+            text_forecast.text = it
         })
     }
 }
