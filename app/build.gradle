@@ -19,6 +19,8 @@ android {
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_URL_WEATHER", "\"https://community-open-weather-map.p.rapidapi.com/\""
     }
 
     signingConfigs {
@@ -66,6 +68,7 @@ android {
 dependencies {
     def navigation_version = '2.2.2'
     def arch_lifecycle_version = '2.2.0'
+    def retrofit_version = "2.6.1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -83,6 +86,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     // Test dependencies
     testImplementation "junit:junit:4.12"
