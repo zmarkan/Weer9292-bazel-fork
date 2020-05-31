@@ -7,11 +7,16 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import nl.tcilegnar.weer9292.BuildConfig
 import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
-import nl.tcilegnar.weer9292.network.model.response.Coordinates
-import nl.tcilegnar.weer9292.network.model.response.CurrentWeather
+import nl.tcilegnar.weer9292.network.model.response.*
 
+/**
+ * Easily turn on/off real API call vs. mock responses, to prevent hitting the limit of 100 calls a day on a free account:
+ * https://rapidapi.com/community/api/open-weather-map/pricing
+ */
+private val useMockedData = BuildConfig.DEBUG
 private const val TAG = "HomeViewModel"
 
 class HomeViewModel(
@@ -25,7 +30,11 @@ class HomeViewModel(
     val currentWeather: LiveData<CurrentWeather?> = _currentWeather
 
     init {
-        getCurrentWeather()
+        if (useMockedData) {
+            _currentWeather.postValue(getMockedResponse())
+        } else {
+            getCurrentWeather()
+        }
     }
 
     private fun getCurrentWeather(
@@ -74,4 +83,13 @@ class HomeViewModel(
             }
         }
     }
+
+    private fun getMockedResponse() = CurrentWeather(
+        1590940089,
+        WeatherProperties(17.79, 14.86, 17.22, 18.33, 1023, 44),
+        listOf(WeatherType(803, "Clouds", "broken clouds")),
+        Wind(1.79, 60, 5.81),
+        Coordinates.get9292HQ(),
+        Sys(2004348, "NL", 1590895545, 1590954547)
+    )
 }
