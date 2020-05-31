@@ -24,8 +24,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.text.observe(this, Observer {
-            text_home.text = it
+        homeViewModel.currentWeather.observe(this, Observer { currentWeather ->
+            currentWeather?.let {
+                text_home.text = it.basicWeather[0].description
+            }
         })
     }
 }
