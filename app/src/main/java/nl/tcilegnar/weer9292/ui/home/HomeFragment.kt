@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.currentWeather.observe(this, Observer { currentWeather ->
             currentWeather?.let {
-                text_home.text = it.basicWeather[0].description
+                text_home.text = it.weatherTypes[0].description
             }
         })
     }
