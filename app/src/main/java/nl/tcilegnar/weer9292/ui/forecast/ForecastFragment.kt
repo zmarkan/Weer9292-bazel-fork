@@ -1,6 +1,7 @@
 package nl.tcilegnar.weer9292.ui.forecast
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +25,13 @@ class ForecastFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { forecast ->
-            forecast?.let {
-                text_forecast.text = it.weatherResponses[0].epoch.toString()
+        forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { dailyForecast ->
+            dailyForecast?.let {
+                text_forecast.text = it.location.cityName
+                Log.d("TEST", "forecast for ${it.location}")
+                it.weathers.forEach { weather ->
+                    Log.d("TEST", "forecast: $weather")
+                }
             }
         })
     }

@@ -1,6 +1,7 @@
 package nl.tcilegnar.weer9292.model
 
 import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
+import nl.tcilegnar.weer9292.network.model.response.DailyWeatherResponse
 import nl.tcilegnar.weer9292.network.model.response.Location
 import nl.tcilegnar.weer9292.network.model.response.Wind
 import nl.tcilegnar.weer9292.util.EpochCalculator
@@ -24,6 +25,16 @@ data class CurrentWeather(
             response.wind,
             response.properties.pressure,
             response.properties.humidity
+        )
+
+        fun from(response: DailyWeatherResponse, location: Location) = CurrentWeather(
+            EpochCalculator().epochToDateTime(response.epoch),
+            location,
+            WeatherCondition.from(response.weatherTypes),
+            Temperatures.from(response.weatherProperties),
+            response.wind,
+            response.pressure,
+            response.humidity
         )
     }
 }
