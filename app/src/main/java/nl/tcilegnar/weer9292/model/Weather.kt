@@ -32,8 +32,8 @@ data class Weather(
             EpochCalculator().epochToDateTime(response.epoch),
             location,
             WeatherCondition.from(response.weatherTypes),
-            Temperatures.from(response.weatherProperties),
-            response.wind,
+            Temperatures.from(response.weatherProperties()),
+            response.wind(),
             response.pressure,
             response.humidity
         )
