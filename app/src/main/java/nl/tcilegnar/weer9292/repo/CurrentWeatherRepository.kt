@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
-import nl.tcilegnar.weer9292.network.model.response.CurrentWeather
+import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
 import nl.tcilegnar.weer9292.network.util.Mocks
 
 private const val TAG = "CurrentWeatherRepo"
@@ -37,18 +37,18 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
-    private val _currentWeather = MutableLiveData<CurrentWeather?>().apply {
+    private val _currentWeather = MutableLiveData<CurrentWeatherResponse?>().apply {
         value = null
     }
 
-    val currentWeather: LiveData<CurrentWeather?> = _currentWeather
-    val currentCoordinates: LiveData<Coordinates?> = Transformations.map(currentWeather) { it?.coordinates }
+    val currentWeatherResponse: LiveData<CurrentWeatherResponse?> = _currentWeather
+    val currentCoordinates: LiveData<Coordinates?> = Transformations.map(currentWeatherResponse) { it?.coordinates }
 
     fun getCurrentWeather(
         coordinates: Coordinates
     ) {
         if (mocks.shouldUseMockedData) {
-            _currentWeather.postValue(mocks.mockedCurrentWeather)
+            _currentWeather.postValue(mocks.mockedCurrentWeatherResponse)
             return
         }
 

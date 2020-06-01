@@ -10,13 +10,14 @@ class Mocks(
      */
     val shouldUseMockedData: Boolean = BuildConfig.DEBUG
 ) {
-    val mockedCurrentWeather = CurrentWeather(
+    val mockedCurrentWeatherResponse = CurrentWeatherResponse(
         1590940089,
         WeatherProperties(17.79, 14.86, 17.22, 18.33, 1023, 44),
         listOf(WeatherType(803, "Clouds", "broken clouds")),
         Wind(1.79, 60, 5.81),
         Coordinates.get9292HQ(),
-        Sys(2004348, "NL", 1590895545, 1590954547)
+        Sys(2004348, "NL", 1590895545, 1590954547),
+        "Mock Utrecht"
     )
 
     val mockedForecast = DailyForecast(

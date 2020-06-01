@@ -2,7 +2,7 @@ package nl.tcilegnar.weer9292.network.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class CurrentWeather(
+data class CurrentWeatherResponse(
     @SerializedName("dt")
     val epoch: Long,
     @SerializedName("main")
@@ -14,7 +14,9 @@ data class CurrentWeather(
     @SerializedName("coord")
     val coordinates: Coordinates,
     @SerializedName("sys")
-    val sys: Sys
+    val sys: Sys,
+    @SerializedName("name")
+    val city: String
 )
 
 data class Sys(

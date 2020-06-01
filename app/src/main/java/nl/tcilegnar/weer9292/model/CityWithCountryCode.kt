@@ -1,4 +1,4 @@
-package nl.tcilegnar.weer9292.network.model
+package nl.tcilegnar.weer9292.model
 
 data class CityWithCountryCode(
     val city: String,
