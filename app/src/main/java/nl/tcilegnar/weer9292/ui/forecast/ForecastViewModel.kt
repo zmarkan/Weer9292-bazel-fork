@@ -7,20 +7,17 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import nl.tcilegnar.weer9292.BuildConfig
 import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
-import nl.tcilegnar.weer9292.network.model.response.*
+import nl.tcilegnar.weer9292.network.model.response.Coordinates
+import nl.tcilegnar.weer9292.network.model.response.DailyForecast
+import nl.tcilegnar.weer9292.network.util.Mocks
 
-/**
- * Easily turn on/off real API call vs. mock responses, to prevent hitting the limit of 100 calls a day on a free account:
- * https://rapidapi.com/community/api/open-weather-map/pricing
- */
-private val useMockedData = BuildConfig.DEBUG
 private const val TAG = "ForecastViewModel"
 
 class ForecastViewModel(
-    private val weatherService: WeatherServices = WeatherApi.getInstance().service
+    private val weatherService: WeatherServices = WeatherApi.getInstance().service,
+    mocks: Mocks = Mocks()
 ) : ViewModel() {
     private val coordinates = Coordinates.get9292HQ() // TODO (PK): read from repo, saved in HomeViewModel
 
@@ -31,8 +28,8 @@ class ForecastViewModel(
     val forecast: LiveData<DailyForecast?> = _forecast
 
     init {
-        if (useMockedData) {
-            _forecast.postValue(getMockedResponse())
+        if (mocks.shouldUseMockedData) {
+            _forecast.postValue(mocks.getMockedForecast())
         } else {
             getDailyForecast(coordinates)
         }
@@ -52,34 +49,4 @@ class ForecastViewModel(
             }
         }
     }
-
-    private fun getMockedResponse() = DailyForecast(
-        listOf(
-            getMockedDailyWeather(1590940089, 14.22, 18.33),
-            getMockedDailyWeather(1590940089, 14.00, 18.00),
-            getMockedDailyWeather(1590940089, 14.00, 18.00)
-        ),
-        City(
-            2745912,
-            "Utrecht",
-            Coordinates.get9292HQ(),
-            "NL"
-        )
-    )
-
-    private fun getMockedDailyWeather(
-        epoch: Long,
-        minTemp: Double,
-        maxTemp: Double
-    ) = DailyWeather(
-        epoch = epoch,
-        sunriseEpoch = 1590940089,
-        sunsetEpoch = 1590940089,
-        temperatureProperties = TemperatureProperties(minTemp, maxTemp),
-        pressure = 1023,
-        humidity = 44,
-        weatherTypes = listOf(WeatherType(803, "Clouds", "broken clouds")),
-        windSpeed = 1.79,
-        windDegrees = 60
-    )
 }
