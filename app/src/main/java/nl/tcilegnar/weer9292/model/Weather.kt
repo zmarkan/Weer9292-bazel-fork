@@ -6,6 +6,7 @@ import nl.tcilegnar.weer9292.network.model.response.Location
 import nl.tcilegnar.weer9292.network.model.response.Wind
 import nl.tcilegnar.weer9292.util.EpochCalculator
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 
 data class Weather(
     val currentDateTime: DateTime,
@@ -37,4 +38,6 @@ data class Weather(
             response.humidity
         )
     }
+
+    fun getDateFormatted(): String = DateTimeFormat.forPattern("dd-MMM HH:mm").print(currentDateTime)
 }

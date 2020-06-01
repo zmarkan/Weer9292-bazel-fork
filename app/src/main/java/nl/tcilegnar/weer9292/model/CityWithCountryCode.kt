@@ -4,5 +4,5 @@ data class CityWithCountryCode(
     val city: String,
     val countryCode: String
 ) {
-    override fun toString() = "$city,$countryCode"
+    override fun toString() = "$city, $countryCode"
 }
