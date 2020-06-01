@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#111111</color>
     <color name="colorAccent">#009AE0</color>
 
+    <color name="colorPrimary60">#99212121</color>
+
     <color name="background">@color/white</color>
     <color name="defaultText">@color/darkGrey</color>
     <color name="subText">@color/grey</color>

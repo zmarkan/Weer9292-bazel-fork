@@ -2,6 +2,8 @@
 
     <dimen name="paddingDefault">16dp</dimen>
 
+    <dimen name="button_radius">8dp</dimen>
+
     <dimen name="text_size_temperature">24sp</dimen>
     <dimen name="text_size_temperature_big">48sp</dimen>
 

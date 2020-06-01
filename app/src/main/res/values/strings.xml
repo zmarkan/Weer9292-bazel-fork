@@ -4,4 +4,5 @@
     <string name="title_radar">Radar</string>
     <string name="temperature_label_max">Max: </string>
     <string name="temperature_label_min">Min: </string>
+    <string name="details">Details</string>
 </resources>

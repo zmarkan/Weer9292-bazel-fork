@@ -30,7 +30,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.currentWeather.observe(viewLifecycleOwner, Observer { currentWeather ->
             currentWeather?.let {
-                setData(it, currentWeather)
+                setData(currentWeather)
+                home_location.setOnClickListener {
+                    // TODO (PK): show coordinates
+                }
+                home_weather_details.setOnClickListener {
+                    // TODO (PK): start WeatherDetailsFragment
+                }
             }
         })
         homeViewModel.currentCoordinates.observe(viewLifecycleOwner, Observer { currentCoordinates ->
@@ -40,12 +46,13 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun setData(weather: Weather, currentWeather: Weather) {
+    private fun setData(weather: Weather) {
         home_location.text = weather.location.cityWithCountryCode.toString()
         home_date.text = weather.getDateFormatted()
         weather_icon.setImageResource(weather.weatherCondition.getIconRes())
         setTemperatures(weather.temperatures)
-        Log.d("TEST", "currentWeather: $currentWeather")
+
+        // TODO (PK): show coordinates?
     }
 
     private fun setTemperatures(temperatures: Temperatures) {
