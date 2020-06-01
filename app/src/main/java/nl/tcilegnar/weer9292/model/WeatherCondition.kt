@@ -18,9 +18,9 @@ enum class WeatherCondition {
         fun from(weatherTypes: List<WeatherType>) = when {
             weatherTypes.any { it.id == 800L } ->
                 SUN
-            weatherTypes.any { it.id in 801L..803L } ->
+            weatherTypes.any { it.id in 801L..802L } ->
                 SUN_CLOUDS
-            weatherTypes.any { it.id == 804L } ->
+            weatherTypes.any { it.id in 803L..804L } ->
                 CLOUDS
             else ->
                 OTHERS
@@ -32,6 +32,6 @@ enum class WeatherCondition {
         SUN -> R.drawable.sun
         SUN_CLOUDS -> R.drawable.sun_cloud
         CLOUDS -> R.drawable.cloud
-        OTHERS -> R.drawable.sun_cloud // TODO (PK): add more cases, and a proper default
+        OTHERS -> R.drawable.weather_unknown // TODO (PK): add more cases
     }
 }
