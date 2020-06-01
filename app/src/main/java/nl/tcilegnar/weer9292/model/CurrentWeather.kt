@@ -2,6 +2,7 @@ package nl.tcilegnar.weer9292.model
 
 import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
 import nl.tcilegnar.weer9292.network.model.response.Wind
+import nl.tcilegnar.weer9292.util.EpochCalculator
 import org.joda.time.DateTime
 
 data class CurrentWeather(
@@ -15,7 +16,7 @@ data class CurrentWeather(
 ) {
     companion object {
         fun from(response: CurrentWeatherResponse) = CurrentWeather(
-            DateTime(response.epoch),
+            EpochCalculator().epochToDateTime(response.epoch),
             Location(response.city, response.sys.countryCode, response.coordinates),
             WeatherCondition.from(response.weatherTypes),
             Temperatures.from(response.properties),
