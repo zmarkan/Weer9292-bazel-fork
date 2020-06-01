@@ -32,7 +32,6 @@ data class WeatherProperties(
     val humidity: Int
 )
 
-/** See [https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2] */
 data class WeatherType(
     @SerializedName("id")
     val id: Long,
