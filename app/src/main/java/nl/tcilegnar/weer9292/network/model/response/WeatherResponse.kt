@@ -41,6 +41,8 @@ data class WeatherType(
     val description: String
 )
 
+fun List<WeatherType>.toFullWeatherTypeDescription() = joinToString(separator = ",\n") { it.description }
+
 data class Wind(
     @SerializedName("speed")
     val speed: Double,

@@ -13,9 +13,7 @@ data class Weather(
     val location: Location,
     val weatherCondition: WeatherCondition,
     val temperatures: Temperatures,
-    val wind: Wind,
-    val pressure: Int,
-    val humidity: Int
+    val wind: Wind
 ) {
     companion object {
         fun from(response: CurrentWeatherResponse) = Weather(
@@ -23,9 +21,7 @@ data class Weather(
             Location(response.cityId, response.cityName, response.sys.countryCode, response.coordinates),
             WeatherCondition.from(response.weatherTypes),
             Temperatures.from(response.properties),
-            response.wind,
-            response.properties.pressure,
-            response.properties.humidity
+            response.wind
         )
 
         fun from(response: DailyWeatherResponse, location: Location) = Weather(
@@ -33,9 +29,7 @@ data class Weather(
             location,
             WeatherCondition.from(response.weatherTypes),
             Temperatures.from(response.weatherProperties()),
-            response.wind(),
-            response.pressure,
-            response.humidity
+            response.wind()
         )
     }
 

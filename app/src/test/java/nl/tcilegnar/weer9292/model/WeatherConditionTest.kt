@@ -39,7 +39,7 @@ class WeatherConditionTest {
 
         val weatherCondition = WeatherCondition.from(weatherTypes)
 
-        assertEquals(SUN_CLOUDS, weatherCondition)
+        assertEquals(CLOUDS, weatherCondition)
     }
 
     @Test

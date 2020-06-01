@@ -28,20 +28,25 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeViewModel.currentWeatherDetails.observe(viewLifecycleOwner, Observer { currentWeatherDetails ->
+            currentWeatherDetails?.let {
+                Log.d("TEST", "currentWeatherDetails: $currentWeatherDetails")
+                home_weather_details.setOnClickListener {
+//                findNavController().navigate(actionHomeFragmentToWeatherDetailsFragment(currentWeatherDetails))
+                }
+            }
+        })
         homeViewModel.currentWeather.observe(viewLifecycleOwner, Observer { currentWeather ->
             currentWeather?.let {
                 setData(currentWeather)
-                home_location.setOnClickListener {
-                    // TODO (PK): show coordinates
-                }
-                home_weather_details.setOnClickListener {
-                    // TODO (PK): start WeatherDetailsFragment
-                }
             }
         })
         homeViewModel.currentCoordinates.observe(viewLifecycleOwner, Observer { currentCoordinates ->
             currentCoordinates?.let {
                 Log.d("TEST", "currentCoordinates: $currentCoordinates")
+                home_location.setOnClickListener {
+                    // TODO (PK): show coordinates
+                }
             }
         })
     }
