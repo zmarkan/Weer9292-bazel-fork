@@ -1,4 +1,4 @@
-package nl.tcilegnar.weer9292
+package nl.tcilegnar.weer9292.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import nl.tcilegnar.weer9292.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +21,9 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_forecast, R.id.navigation_radar
+                R.id.navigation_home,
+                R.id.navigation_forecast,
+                R.id.navigation_radar
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

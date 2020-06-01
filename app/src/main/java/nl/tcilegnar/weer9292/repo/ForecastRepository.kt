@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
-import nl.tcilegnar.weer9292.network.model.response.DailyForecast
+import nl.tcilegnar.weer9292.network.model.response.DailyForecastResponse
 import nl.tcilegnar.weer9292.network.util.Mocks
 
 private const val TAG = "ForecastRepository"
@@ -36,17 +36,17 @@ class ForecastRepository private constructor(
         }
     }
 
-    private val _forecast = MutableLiveData<DailyForecast?>().apply {
+    private val _forecastResponse = MutableLiveData<DailyForecastResponse?>().apply {
         value = null
     }
 
-    val forecast: LiveData<DailyForecast?> = _forecast
+    val forecastResponse: LiveData<DailyForecastResponse?> = _forecastResponse
 
     fun getDailyForecast(
         coordinates: Coordinates
     ) {
         if (mocks.shouldUseMockedData) {
-            _forecast.postValue(mocks.mockedForecast)
+            _forecastResponse.postValue(mocks.mockedDailyForecastResponse)
             return
         }
 
@@ -54,7 +54,7 @@ class ForecastRepository private constructor(
             try {
                 val response = weatherService.getDailyForecast(lat = coordinates.lat, lon = coordinates.lon)
                 // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
-                _forecast.postValue(response)
+                _forecastResponse.postValue(response)
             } catch (e: Exception) {
                 // TODO: improve user feedback on error
                 Log.w(TAG, "Error on getDailyForecast: ", e)

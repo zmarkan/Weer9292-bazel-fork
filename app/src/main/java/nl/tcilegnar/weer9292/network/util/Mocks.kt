@@ -10,38 +10,40 @@ class Mocks(
      */
     val shouldUseMockedData: Boolean = BuildConfig.DEBUG
 ) {
-    val mockedCurrentWeather = CurrentWeather(
+    val mockedCurrentWeatherResponse = CurrentWeatherResponse(
         1590940089,
         WeatherProperties(17.79, 14.86, 17.22, 18.33, 1023, 44),
         listOf(WeatherType(803, "Clouds", "broken clouds")),
         Wind(1.79, 60, 5.81),
         Coordinates.get9292HQ(),
-        Sys(2004348, "NL", 1590895545, 1590954547)
+        Sys(2004348, "NL", 1590895545, 1590954547),
+        "Mock Utrecht",
+        2745912
     )
 
-    val mockedForecast = DailyForecast(
+    val mockedDailyForecastResponse = DailyForecastResponse(
         listOf(
-            getMockedDailyWeather(1591009200, 13.33, 21.68),
-            getMockedDailyWeather(1591095600, 14.00, 18.00),
-            getMockedDailyWeather(1591182000, 15.00, 19.00),
-            getMockedDailyWeather(1591268400, 16.00, 20.00),
-            getMockedDailyWeather(1591354800, 17.00, 21.00),
-            getMockedDailyWeather(1591441200, 18.00, 22.00),
-            getMockedDailyWeather(1591527600, 19.00, 23.00)
+            getMockedDailyWeatherResponse(1591009200, 13.33, 21.68),
+            getMockedDailyWeatherResponse(1591095600, 14.00, 18.00),
+            getMockedDailyWeatherResponse(1591182000, 15.00, 19.00),
+            getMockedDailyWeatherResponse(1591268400, 16.00, 20.00),
+            getMockedDailyWeatherResponse(1591354800, 17.00, 21.00),
+            getMockedDailyWeatherResponse(1591441200, 18.00, 22.00),
+            getMockedDailyWeatherResponse(1591527600, 19.00, 23.00)
         ),
-        City(
+        Location(
             2745912,
             "Utrecht",
-            Coordinates.get9292HQ(),
-            "NL"
+            "NL",
+            Coordinates.get9292HQ()
         )
     )
 
-    private fun getMockedDailyWeather(
+    private fun getMockedDailyWeatherResponse(
         epoch: Long,
         minTemp: Double,
         maxTemp: Double
-    ) = DailyWeather(
+    ) = DailyWeatherResponse(
         epoch = epoch,
         sunriseEpoch = 1590940089,
         sunsetEpoch = 1590940089,

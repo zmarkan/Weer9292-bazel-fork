@@ -25,13 +25,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.currentWeather.observe(this, Observer { currentWeather ->
+        homeViewModel.currentWeather.observe(viewLifecycleOwner, Observer { currentWeather ->
             currentWeather?.let {
-                text_home.text = it.weatherTypes[0].description
+                text_home.text = it.location.cityName
                 Log.d("TEST", "currentWeather: $currentWeather")
             }
         })
-        homeViewModel.currentCoordinates.observe(this, Observer { currentCoordinates ->
+        homeViewModel.currentCoordinates.observe(viewLifecycleOwner, Observer { currentCoordinates ->
             currentCoordinates?.let {
                 Log.d("TEST", "currentCoordinates: $currentCoordinates")
             }

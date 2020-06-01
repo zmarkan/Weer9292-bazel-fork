@@ -2,7 +2,7 @@ package nl.tcilegnar.weer9292.network.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Weather(
+data class WeatherResponse(
     @SerializedName("dt")
     val epoch: Long,
     @SerializedName("main")
@@ -14,11 +14,11 @@ data class Weather(
 )
 
 data class WeatherProperties(
-    /** temperature can be null: not available for [DailyWeather] by default */
+    /** temperature can be null: not available for [DailyWeatherResponse] by default */
     @SerializedName("temp")
     val temperature: Double? = null,
 
-    /** temperatureFeelsLike can be null: not available for [DailyWeather] by default */
+    /** temperatureFeelsLike can be null: not available for [DailyWeatherResponse] by default */
     @SerializedName("feels_like")
     val temperatureFeelsLike: Double? = null,
 
@@ -32,7 +32,6 @@ data class WeatherProperties(
     val humidity: Int
 )
 
-/** See [https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2] */
 data class WeatherType(
     @SerializedName("id")
     val id: Long,
@@ -48,7 +47,7 @@ data class Wind(
     @SerializedName("deg")
     val degrees: Int,
 
-    /** Gust can be null: not available for [Forecast] or [DailyForecast] by default */
+    /** Gust can be null: not available for [ForecastResponse] or [DailyForecastResponse] by default */
     @SerializedName("gust")
     val gust: Double? = null
 )

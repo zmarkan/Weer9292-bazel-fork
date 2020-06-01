@@ -1,9 +1,9 @@
 package nl.tcilegnar.weer9292.network
 
-import nl.tcilegnar.weer9292.network.model.CityWithCountryCode
-import nl.tcilegnar.weer9292.network.model.response.CurrentWeather
-import nl.tcilegnar.weer9292.network.model.response.DailyForecast
-import nl.tcilegnar.weer9292.network.model.response.Forecast
+import nl.tcilegnar.weer9292.model.CityWithCountryCode
+import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
+import nl.tcilegnar.weer9292.network.model.response.DailyForecastResponse
+import nl.tcilegnar.weer9292.network.model.response.ForecastResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -16,7 +16,7 @@ interface WeatherServices {
     suspend fun getCurrentWeather(
         @Query("q") cityWithCountryCode: CityWithCountryCode,
         @Query("units") units: String = DEFAULT_UNIT
-    ): CurrentWeather
+    ): CurrentWeatherResponse
 
     @Headers("Content-Type: application/json")
     @GET("weather")
@@ -24,14 +24,14 @@ interface WeatherServices {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("units") units: String = DEFAULT_UNIT
-    ): CurrentWeather
+    ): CurrentWeatherResponse
 
     @Headers("Content-Type: application/json")
     @GET("forecast")
     suspend fun getForecast(
         @Query("q") cityWithCountryCode: CityWithCountryCode,
         @Query("units") units: String = DEFAULT_UNIT
-    ): Forecast
+    ): ForecastResponse
 
     @Headers("Content-Type: application/json")
     @GET("forecast")
@@ -39,7 +39,7 @@ interface WeatherServices {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("units") units: String = DEFAULT_UNIT
-    ): Forecast
+    ): ForecastResponse
 
     // Paid API calls:
 
@@ -48,7 +48,7 @@ interface WeatherServices {
     suspend fun getDailyForecast(
         @Query("q") cityWithCountryCode: CityWithCountryCode,
         @Query("units") units: String = DEFAULT_UNIT
-    ): DailyForecast
+    ): DailyForecastResponse
 
     @Headers("Content-Type: application/json")
     @GET("forecast/daily")
@@ -56,5 +56,5 @@ interface WeatherServices {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("units") units: String = DEFAULT_UNIT
-    ): DailyForecast
+    ): DailyForecastResponse
 }

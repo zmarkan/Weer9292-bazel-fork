@@ -4,9 +4,9 @@ package nl.tcilegnar.weer9292.network.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class DailyForecast(
+data class ForecastResponse(
     @SerializedName("list")
-    val weathers: List<DailyWeather>,
+    val weatherResponses: List<WeatherResponse>,
     @SerializedName("city")
-    val city: City
+    val location: Location
 )
