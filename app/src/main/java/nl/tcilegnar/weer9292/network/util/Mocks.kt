@@ -17,7 +17,8 @@ class Mocks(
         Wind(1.79, 60, 5.81),
         Coordinates.get9292HQ(),
         Sys(2004348, "NL", 1590895545, 1590954547),
-        "Mock Utrecht"
+        "Mock Utrecht",
+        2745912
     )
 
     val mockedDailyForecastResponse = DailyForecastResponse(
@@ -30,11 +31,11 @@ class Mocks(
             getMockedDailyWeatherResponse(1591441200, 18.00, 22.00),
             getMockedDailyWeatherResponse(1591527600, 19.00, 23.00)
         ),
-        City(
+        Location(
             2745912,
             "Utrecht",
-            Coordinates.get9292HQ(),
-            "NL"
+            "NL",
+            Coordinates.get9292HQ()
         )
     )
 

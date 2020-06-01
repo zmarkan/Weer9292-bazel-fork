@@ -8,5 +8,5 @@ data class DailyForecastResponse(
     @SerializedName("list")
     val weatherResponses: List<DailyWeatherResponse>,
     @SerializedName("city")
-    val city: City
+    val location: Location
 )

@@ -16,7 +16,9 @@ data class CurrentWeatherResponse(
     @SerializedName("sys")
     val sys: Sys,
     @SerializedName("name")
-    val city: String
+    val cityName: String,
+    @SerializedName("id")
+    val cityId: Long
 )
 
 data class Sys(
