@@ -45,38 +45,6 @@ class HomeViewModel(
                 val response = weatherService.getCurrentWeather(lat = coordinates.lat, lon = coordinates.lon)
                 // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
                 _currentWeather.postValue(response)
-
-                // TODO (PK): Testing API calls:
-                // getForecast(response.coordinates)
-                // getDailyForecast(coordinates)
-            } catch (e: Exception) {
-                // TODO: improve user feedback on error
-                Log.w(TAG, "Error on getCurrentWeather: ", e)
-            }
-        }
-    }
-
-    private fun getForecast(
-        coordinates: Coordinates
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = weatherService.getForecast(lat = coordinates.lat, lon = coordinates.lon)
-                // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
-            } catch (e: Exception) {
-                // TODO: improve user feedback on error
-                Log.w(TAG, "Error on getCurrentWeather: ", e)
-            }
-        }
-    }
-
-    private fun getDailyForecast(
-        coordinates: Coordinates
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = weatherService.getDailyForecast(lat = coordinates.lat, lon = coordinates.lon)
-                // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
             } catch (e: Exception) {
                 // TODO: improve user feedback on error
                 Log.w(TAG, "Error on getCurrentWeather: ", e)
