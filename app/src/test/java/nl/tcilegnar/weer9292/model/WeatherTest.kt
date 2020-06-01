@@ -10,7 +10,7 @@ private const val COUNTRY_CODE = "NL"
 private val COORDINATES = Coordinates(12.0, 13.0)
 private val WIND = Wind(6.0, 360, 7.0)
 
-class CurrentWeatherTest {
+class WeatherTest {
 
     @Test
     fun currentWeatherFromResponse() {
@@ -21,20 +21,21 @@ class CurrentWeatherTest {
             WIND,
             COORDINATES,
             Sys(12345, COUNTRY_CODE, 1590895545, 1590954547),
-            CITY
+            CITY,
+            123
         )
 
-        val currentWeather = CurrentWeather.from(response)
+        val weather = Weather.from(response)
 
-        val expectedCurrentWeather = CurrentWeather(
+        val expectedWeather = Weather(
             DateTime(0),
-            Location(CITY, COUNTRY_CODE, COORDINATES),
+            Location(123, CITY, COUNTRY_CODE, COORDINATES),
             WeatherCondition.SUN_CLOUDS,
             Temperatures(1, 2, 3, 4),
             WIND,
             1000,
             50
         )
-        assertEquals(expectedCurrentWeather, currentWeather)
+        assertEquals(expectedWeather, weather)
     }
 }

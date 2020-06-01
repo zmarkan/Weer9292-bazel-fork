@@ -2,7 +2,7 @@ package nl.tcilegnar.weer9292.ui.home
 
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import nl.tcilegnar.weer9292.model.CurrentWeather
+import nl.tcilegnar.weer9292.model.Weather
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.repo.CurrentWeatherRepo
 
@@ -12,7 +12,7 @@ class HomeViewModel(
     currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
 ) : ViewModel() {
     val currentWeather = Transformations.map(currentWeatherRepo.currentWeatherResponse) {
-        it?.let { CurrentWeather.from(it) }
+        it?.let { Weather.from(it) }
     }
     val currentCoordinates = currentWeatherRepo.currentCoordinates
 

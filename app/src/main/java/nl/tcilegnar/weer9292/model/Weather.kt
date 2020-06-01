@@ -7,7 +7,7 @@ import nl.tcilegnar.weer9292.network.model.response.Wind
 import nl.tcilegnar.weer9292.util.EpochCalculator
 import org.joda.time.DateTime
 
-data class CurrentWeather(
+data class Weather(
     val currentDateTime: DateTime,
     val location: Location,
     val weatherCondition: WeatherCondition,
@@ -17,7 +17,7 @@ data class CurrentWeather(
     val humidity: Int
 ) {
     companion object {
-        fun from(response: CurrentWeatherResponse) = CurrentWeather(
+        fun from(response: CurrentWeatherResponse) = Weather(
             EpochCalculator().epochToDateTime(response.epoch),
             Location(response.cityId, response.cityName, response.sys.countryCode, response.coordinates),
             WeatherCondition.from(response.weatherTypes),
@@ -27,7 +27,7 @@ data class CurrentWeather(
             response.properties.humidity
         )
 
-        fun from(response: DailyWeatherResponse, location: Location) = CurrentWeather(
+        fun from(response: DailyWeatherResponse, location: Location) = Weather(
             EpochCalculator().epochToDateTime(response.epoch),
             location,
             WeatherCondition.from(response.weatherTypes),
