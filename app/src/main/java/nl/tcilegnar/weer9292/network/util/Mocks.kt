@@ -19,7 +19,7 @@ class Mocks(
         Sys(2004348, "NL", 1590895545, 1590954547)
     )
 
-    fun getMockedForecast() = DailyForecast(
+    val mockedForecast = DailyForecast(
         listOf(
             getMockedDailyWeather(1590940089, 14.22, 18.33),
             getMockedDailyWeather(1590940089, 14.00, 18.00),
