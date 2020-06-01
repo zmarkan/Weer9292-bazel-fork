@@ -24,8 +24,10 @@ class ForecastFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        forecastViewModel.text.observe(this, Observer {
-            text_forecast.text = it
+        forecastViewModel.forecast.observe(this, Observer { forecast ->
+            forecast?.let {
+                text_forecast.text = it.weathers[0].epoch.toString()
+            }
         })
     }
 }

@@ -1,13 +1,18 @@
 package nl.tcilegnar.weer9292.ui.forecast
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import nl.tcilegnar.weer9292.repo.CurrentWeatherRepo
+import nl.tcilegnar.weer9292.repo.ForecastRepository
 
-class ForecastViewModel : ViewModel() {
+class ForecastViewModel(
+    forecastRepo: ForecastRepository = ForecastRepository.getInstance(),
+    currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
+) : ViewModel() {
+    val forecast = forecastRepo.forecast
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is forecast Fragment"
+    init {
+        currentWeatherRepo.currentCoordinates.value?.let {
+            forecastRepo.getDailyForecast(it)
+        }
     }
-    val text: LiveData<String> = _text
 }
