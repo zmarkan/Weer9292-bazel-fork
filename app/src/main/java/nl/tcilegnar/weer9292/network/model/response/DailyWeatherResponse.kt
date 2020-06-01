@@ -22,14 +22,14 @@ data class DailyWeatherResponse(
     @SerializedName("degrees")
     val windDegrees: Int
 ) {
-    val weatherProperties = WeatherProperties(
+    fun weatherProperties() = WeatherProperties(
         temperatureMin = temperatureProperties.min,
         temperatureMax = temperatureProperties.max,
         pressure = pressure,
         humidity = humidity
     )
 
-    val wind = Wind(windSpeed, windDegrees)
+    fun wind() = Wind(windSpeed, windDegrees)
 }
 
 data class TemperatureProperties(
