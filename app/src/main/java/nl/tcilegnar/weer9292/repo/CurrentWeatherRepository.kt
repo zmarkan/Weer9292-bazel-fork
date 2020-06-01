@@ -37,18 +37,18 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
-    private val _currentWeather = MutableLiveData<CurrentWeatherResponse?>().apply {
+    private val _currentWeatherResponse = MutableLiveData<CurrentWeatherResponse?>().apply {
         value = null
     }
 
-    val currentWeatherResponse: LiveData<CurrentWeatherResponse?> = _currentWeather
+    val currentWeatherResponse: LiveData<CurrentWeatherResponse?> = _currentWeatherResponse
     val currentCoordinates: LiveData<Coordinates?> = Transformations.map(currentWeatherResponse) { it?.coordinates }
 
     fun getCurrentWeather(
         coordinates: Coordinates
     ) {
         if (mocks.shouldUseMockedData) {
-            _currentWeather.postValue(mocks.mockedCurrentWeatherResponse)
+            _currentWeatherResponse.postValue(mocks.mockedCurrentWeatherResponse)
             return
         }
 
@@ -56,7 +56,7 @@ class CurrentWeatherRepo private constructor(
             try {
                 val response = weatherService.getCurrentWeather(lat = coordinates.lat, lon = coordinates.lon)
                 // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
-                _currentWeather.postValue(response)
+                _currentWeatherResponse.postValue(response)
             } catch (e: Exception) {
                 // TODO: improve user feedback on error
                 Log.w(TAG, "Error on getCurrentWeather: ", e)

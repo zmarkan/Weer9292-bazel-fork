@@ -26,7 +26,7 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         forecastViewModel.forecast.observe(this, Observer { forecast ->
             forecast?.let {
-                text_forecast.text = it.weathers[0].epoch.toString()
+                text_forecast.text = it.weatherResponses[0].epoch.toString()
             }
         })
     }

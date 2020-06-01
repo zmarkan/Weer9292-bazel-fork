@@ -20,15 +20,15 @@ class Mocks(
         "Mock Utrecht"
     )
 
-    val mockedForecast = DailyForecast(
+    val mockedDailyForecastResponse = DailyForecastResponse(
         listOf(
-            getMockedDailyWeather(1591009200, 13.33, 21.68),
-            getMockedDailyWeather(1591095600, 14.00, 18.00),
-            getMockedDailyWeather(1591182000, 15.00, 19.00),
-            getMockedDailyWeather(1591268400, 16.00, 20.00),
-            getMockedDailyWeather(1591354800, 17.00, 21.00),
-            getMockedDailyWeather(1591441200, 18.00, 22.00),
-            getMockedDailyWeather(1591527600, 19.00, 23.00)
+            getMockedDailyWeatherResponse(1591009200, 13.33, 21.68),
+            getMockedDailyWeatherResponse(1591095600, 14.00, 18.00),
+            getMockedDailyWeatherResponse(1591182000, 15.00, 19.00),
+            getMockedDailyWeatherResponse(1591268400, 16.00, 20.00),
+            getMockedDailyWeatherResponse(1591354800, 17.00, 21.00),
+            getMockedDailyWeatherResponse(1591441200, 18.00, 22.00),
+            getMockedDailyWeatherResponse(1591527600, 19.00, 23.00)
         ),
         City(
             2745912,
@@ -38,11 +38,11 @@ class Mocks(
         )
     )
 
-    private fun getMockedDailyWeather(
+    private fun getMockedDailyWeatherResponse(
         epoch: Long,
         minTemp: Double,
         maxTemp: Double
-    ) = DailyWeather(
+    ) = DailyWeatherResponse(
         epoch = epoch,
         sunriseEpoch = 1590940089,
         sunsetEpoch = 1590940089,

@@ -8,7 +8,7 @@ class ForecastViewModel(
     forecastRepo: ForecastRepository = ForecastRepository.getInstance(),
     currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
 ) : ViewModel() {
-    val forecast = forecastRepo.forecast
+    val forecast = forecastRepo.forecastResponse
 
     init {
         currentWeatherRepo.currentCoordinates.value?.let {
