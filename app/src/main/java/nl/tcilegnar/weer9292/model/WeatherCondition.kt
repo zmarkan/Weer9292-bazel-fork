@@ -1,5 +1,7 @@
 package nl.tcilegnar.weer9292.model
 
+import androidx.annotation.DrawableRes
+import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.network.model.response.WeatherType
 
 enum class WeatherCondition {
@@ -23,5 +25,13 @@ enum class WeatherCondition {
             else ->
                 OTHERS
         }
+    }
+
+    @DrawableRes
+    fun getIconRes() = when (this) {
+        SUN -> R.drawable.sun
+        SUN_CLOUDS -> R.drawable.sun_cloud
+        CLOUDS -> R.drawable.cloud
+        OTHERS -> R.drawable.sun_cloud // TODO (PK): add more cases, and a proper default
     }
 }

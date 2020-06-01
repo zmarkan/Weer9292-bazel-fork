@@ -2,4 +2,6 @@
     <string name="title_home">Home</string>
     <string name="title_forecast">Forecast</string>
     <string name="title_radar">Radar</string>
+    <string name="temperature_label_max">Max: </string>
+    <string name="temperature_label_min">Min: </string>
 </resources>

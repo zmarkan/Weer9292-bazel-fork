@@ -14,4 +14,7 @@
     <color name="lightGrey">#E3E3E3</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#D54723</color>
+
+    <color name="temperatureMax">@color/red</color>
+    <color name="temperatureMin">@color/colorAccent</color>
 </resources>
