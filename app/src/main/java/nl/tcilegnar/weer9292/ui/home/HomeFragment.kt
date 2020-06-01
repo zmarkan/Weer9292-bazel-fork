@@ -1,6 +1,7 @@
 package nl.tcilegnar.weer9292.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,12 @@ class HomeFragment : Fragment() {
         homeViewModel.currentWeather.observe(this, Observer { currentWeather ->
             currentWeather?.let {
                 text_home.text = it.weatherTypes[0].description
+                Log.d("TEST", "currentWeather: $currentWeather")
+            }
+        })
+        homeViewModel.currentCoordinates.observe(this, Observer { currentCoordinates ->
+            currentCoordinates?.let {
+                Log.d("TEST", "currentCoordinates: $currentCoordinates")
             }
         })
     }

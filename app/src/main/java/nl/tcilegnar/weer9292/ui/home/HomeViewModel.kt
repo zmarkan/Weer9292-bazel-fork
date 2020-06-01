@@ -10,6 +10,7 @@ class HomeViewModel(
     currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
 ) : ViewModel() {
     val currentWeather = currentWeatherRepo.currentWeather
+    val currentCoordinates = currentWeatherRepo.currentCoordinates
 
     init {
         currentWeatherRepo.getCurrentWeather(defaultCoordinates)

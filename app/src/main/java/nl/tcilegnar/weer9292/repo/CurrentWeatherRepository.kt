@@ -3,6 +3,7 @@ package nl.tcilegnar.weer9292.repo
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +42,7 @@ class CurrentWeatherRepo private constructor(
     }
 
     val currentWeather: LiveData<CurrentWeather?> = _currentWeather
+    val currentCoordinates: LiveData<Coordinates?> = Transformations.map(currentWeather) { it?.coordinates }
 
     fun getCurrentWeather(
         coordinates: Coordinates
