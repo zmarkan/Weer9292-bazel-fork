@@ -39,5 +39,9 @@ data class Weather(
         )
     }
 
-    fun getDateFormatted(): String = DateTimeFormat.forPattern("dd-MMM HH:mm").print(currentDateTime)
+    fun getDateTimeFormatted(): String = DateTimeFormat.forPattern("dd-MMM HH:mm").print(currentDateTime)
+
+    fun getDateFormatted(): String = DateTimeFormat.forPattern("dd-MMM").print(currentDateTime)
+
+    fun getDayOfWeekFormatted(): String = DateTimeFormat.forPattern("EEE").print(currentDateTime)
 }

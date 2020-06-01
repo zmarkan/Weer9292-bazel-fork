@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
 
     private fun setData(weather: Weather) {
         home_location.text = weather.location.cityWithCountryCode.toString()
-        home_date.text = weather.getDateFormatted()
+        home_date.text = weather.getDateTimeFormatted()
         weather_icon.setImageResource(weather.weatherCondition.getIconRes())
         setTemperatures(weather.temperatures)
 

@@ -1,18 +1,23 @@
 package nl.tcilegnar.weer9292.ui.forecast
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_forecast.*
 import nl.tcilegnar.weer9292.R
+import nl.tcilegnar.weer9292.model.Weather
+import nl.tcilegnar.weer9292.ui.customview.ForecastColumn
+
+private const val NUMBER_OF_DAYS_SHOWN = 7
 
 class ForecastFragment : Fragment() {
     private lateinit var forecastViewModel: ForecastViewModel
+    private var columns = arrayListOf<ForecastColumn>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,14 +30,20 @@ class ForecastFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        columns.addAll(columnContainer.children.map { it as ForecastColumn })
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { dailyForecast ->
             dailyForecast?.let {
-                text_forecast.text = it.location.cityName
-                Log.d("TEST", "forecast for ${it.location}")
-                it.weathers.forEach { weather ->
-                    Log.d("TEST", "forecast: $weather")
+                // TODO (PK): it.location.cityWithCountryCode
+                it.weathers.take(columns.size).forEachIndexed { index, weather ->
+                    setColumnData(index, weather)
                 }
             }
         })
+    }
+
+    private fun setColumnData(index: Int, weather: Weather) {
+        columns[index].setWeatherData(weather) {
+            // TODO (PK): start WeatherDetailsFragment
+        }
     }
 }
