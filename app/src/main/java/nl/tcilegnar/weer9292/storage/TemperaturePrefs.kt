@@ -4,6 +4,7 @@ import android.content.Context
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs.TemperatureUnit.CELCIUS
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs.TemperatureUnit.FAHRENHEIT
+import kotlin.math.roundToInt
 
 class TemperaturePrefs(
     context: Context
@@ -29,14 +30,20 @@ class TemperaturePrefs(
         )
     }
 
-    fun getTemperatureText(temperature: Int): String {
-        val unit = context.getString(
-            when (getTemperatureUnit()) {
+    fun getTemperatureText(temperatureCelcius: Int): String {
+        val temperatureUnit = getTemperatureUnit()
+        val temperatureValue =
+            when (temperatureUnit) {
+                CELCIUS -> temperatureCelcius
+                FAHRENHEIT -> ((9.0 / 5.0) * temperatureCelcius + 32).roundToInt()
+            }
+        val temperatureUnitText = context.getString(
+            when (temperatureUnit) {
                 CELCIUS -> R.string.degreesCelciusUnit
                 FAHRENHEIT -> R.string.degreesFahrenheitUnit
             }
         )
-        return "$temperature$unit"
+        return "$temperatureValue$temperatureUnitText"
     }
 
     enum class TemperatureUnit {
