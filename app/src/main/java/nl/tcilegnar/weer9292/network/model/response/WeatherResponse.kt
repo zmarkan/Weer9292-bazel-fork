@@ -1,6 +1,8 @@
 package nl.tcilegnar.weer9292.network.model.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 data class WeatherResponse(
     @SerializedName("dt")
@@ -43,6 +45,7 @@ data class WeatherType(
 
 fun List<WeatherType>.toFullWeatherTypeDescription() = joinToString(separator = ",\n") { it.description }
 
+@Parcelize
 data class Wind(
     @SerializedName("speed")
     val speed: Double,
@@ -52,4 +55,4 @@ data class Wind(
     /** Gust can be null: not available for [ForecastResponse] or [DailyForecastResponse] by default */
     @SerializedName("gust")
     val gust: Double? = null
-)
+) : Parcelable

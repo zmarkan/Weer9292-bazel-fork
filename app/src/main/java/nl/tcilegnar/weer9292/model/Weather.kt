@@ -1,5 +1,7 @@
 package nl.tcilegnar.weer9292.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
 import nl.tcilegnar.weer9292.network.model.response.DailyWeatherResponse
 import nl.tcilegnar.weer9292.network.model.response.Location
@@ -8,13 +10,14 @@ import nl.tcilegnar.weer9292.util.EpochCalculator
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
+@Parcelize
 data class Weather(
     val currentDateTime: DateTime,
     val location: Location,
     val weatherCondition: WeatherCondition,
     val temperatures: Temperatures,
     val wind: Wind
-) {
+) : Parcelable {
     companion object {
         fun from(response: CurrentWeatherResponse) = Weather(
             EpochCalculator().epochToDateTime(response.epoch),

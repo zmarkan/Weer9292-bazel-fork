@@ -2,9 +2,12 @@
 
 package nl.tcilegnar.weer9292.network.model.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import nl.tcilegnar.weer9292.model.CityWithCountryCode
 
+@Parcelize
 data class Location(
     @SerializedName("id")
     val id: Long,
@@ -14,6 +17,6 @@ data class Location(
     val countryCode: String,
     @SerializedName("coord")
     val coordinates: Coordinates
-) {
+) : Parcelable {
     val cityWithCountryCode = CityWithCountryCode(cityName, countryCode)
 }
