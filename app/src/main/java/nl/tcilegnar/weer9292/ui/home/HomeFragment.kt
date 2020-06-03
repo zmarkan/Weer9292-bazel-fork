@@ -20,6 +20,7 @@ import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHome
 
 class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var temperaturePrefs: TemperaturePrefs
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        temperaturePrefs = TemperaturePrefs(requireContext())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,7 +58,9 @@ class HomeFragment : Fragment() {
         setActionbarTitle(weather.location.cityWithCountryCode.toString())
         home_date.text = weather.getDateTimeFormatted()
         weather_icon.setImageResource(weather.weatherCondition.getIconRes())
-        setTemperatures(weather.temperatures)
+        temperaturePrefs.getTemperatureUnitLiveDataString().observe(viewLifecycleOwner, Observer {
+            setTemperatures(weather.temperatures)
+        })
     }
 
     private fun setTemperatures(temperatures: Temperatures) {
