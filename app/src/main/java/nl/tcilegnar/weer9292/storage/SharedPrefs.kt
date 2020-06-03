@@ -63,6 +63,11 @@ abstract class SharedPrefs(context: Context) : ContextWrapper(context) {
         return prefs.getString(key, defaultValue) ?: defaultValue
     }
 
+    @JvmOverloads
+    protected fun loadStringLiveData(key: String, defaultValue: String = ""): SharedPreferenceLiveData<String> {
+        return prefs.stringLiveData(key, defaultValue)
+    }
+
     // Integers
     protected fun save(key: String, value: Int) {
         prefsEdit().putInt(key, value).apply()

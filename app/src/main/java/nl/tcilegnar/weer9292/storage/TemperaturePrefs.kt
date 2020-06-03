@@ -14,9 +14,11 @@ class TemperaturePrefs(
         private const val TEMPERATURE_UNIT = "TEMPERATURE_UNIT"
     }
 
-    fun getTemperatureUnit() = TemperatureUnit.valueOf(loadString(TEMPERATURE_UNIT, CELCIUS.name))
+    private fun getTemperatureUnit() = TemperatureUnit.valueOf(loadString(TEMPERATURE_UNIT, CELCIUS.name))
 
-    fun setTemperatureUnit(unit: TemperatureUnit) {
+    fun getTemperatureUnitLiveDataString() = loadStringLiveData(TEMPERATURE_UNIT, CELCIUS.name)
+
+    private fun setTemperatureUnit(unit: TemperatureUnit) {
         save(TEMPERATURE_UNIT, unit.name)
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -42,14 +43,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.settings, menu)
         this.menu = menu
-        setTemperatureUnitIcon(temperaturePrefs.getTemperatureUnit())
+        temperaturePrefs.getTemperatureUnitLiveDataString().observe(this, Observer {
+            val newIcon = TemperatureUnit.valueOf(it)
+            menu.getItem(0).icon = newIcon.getMenuIcon(this)
+        })
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> {
-            val newUnit = temperaturePrefs.toggleTemperatureUnit()
-            setTemperatureUnitIcon(newUnit)
+            temperaturePrefs.toggleTemperatureUnit()
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -57,9 +60,5 @@ class MainActivity : AppCompatActivity() {
 
     fun setActionBarTitle(title: String?) {
         supportActionBar!!.title = title
-    }
-
-    private fun setTemperatureUnitIcon(newIcon: TemperatureUnit) {
-        menu.getItem(0).icon = newIcon.getMenuIcon(this)
     }
 }
