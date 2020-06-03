@@ -115,7 +115,7 @@ abstract class SharedPrefs(context: Context) : ContextWrapper(context) {
         return prefs.getStringSet(key, defaultValue)
     }
 
-    protected fun deletePreferences() {
+    fun deletePreferences() {
         prefs.edit().clear().apply()
     }
 }
