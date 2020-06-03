@@ -33,11 +33,9 @@ class WeatherTest {
         val expectedWeather = Weather(
             DateTime(0),
             Location(CITY_ID, CITY, COUNTRY_CODE, COORDINATES),
-            WeatherCondition.SUN_CLOUDS,
+            WeatherCondition.CLOUDS,
             Temperatures(1, 2, 3, 4),
-            WIND,
-            PRESSURE,
-            HUMIDITY
+            WIND
         )
         assertEquals(expectedWeather, weather)
     }
@@ -63,11 +61,9 @@ class WeatherTest {
         val expectedWeather = Weather(
             DateTime(0),
             location,
-            WeatherCondition.SUN_CLOUDS,
+            WeatherCondition.CLOUDS,
             Temperatures(null, null, 1, 2),
-            Wind(WIND.speed, WIND.degrees, null),
-            PRESSURE,
-            HUMIDITY
+            Wind(WIND.speed, WIND.degrees, null)
         )
         assertEquals(expectedWeather, weather)
     }

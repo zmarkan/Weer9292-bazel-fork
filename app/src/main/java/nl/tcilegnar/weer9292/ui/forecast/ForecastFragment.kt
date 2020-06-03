@@ -8,9 +8,10 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_forecast.*
 import nl.tcilegnar.weer9292.R
-import nl.tcilegnar.weer9292.model.Weather
+import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.ui.customview.ForecastColumn
 
 private const val NUMBER_OF_DAYS_SHOWN = 7
@@ -34,16 +35,18 @@ class ForecastFragment : Fragment() {
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { dailyForecast ->
             dailyForecast?.let {
                 // TODO (PK): it.location.cityWithCountryCode
-                it.weathers.take(columns.size).forEachIndexed { index, weather ->
-                    setColumnData(index, weather)
+                it.weathers.take(columns.size).forEachIndexed { index, weatherDetails ->
+                    setColumnData(index, weatherDetails)
                 }
             }
         })
     }
 
-    private fun setColumnData(index: Int, weather: Weather) {
-        columns[index].setWeatherData(weather) {
-            // TODO (PK): start WeatherDetailsFragment
+    private fun setColumnData(index: Int, weatherDetails: WeatherDetails) {
+        columns[index].setWeatherData(weatherDetails) {
+            findNavController().navigate(
+                ForecastFragmentDirections.actionForecastFragmentToWeatherDetailsFragment(weatherDetails)
+            )
         }
     }
 }

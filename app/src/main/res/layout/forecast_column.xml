@@ -29,7 +29,7 @@
         android:id="@+id/weather_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingDefault"
+        android:layout_marginTop="@dimen/padding_default"
         android:adjustViewBounds="true"
         tools:src="@drawable/ic_cloud_black" />
 
@@ -38,7 +38,7 @@
         style="@style/forecast_column_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingDefault"
+        android:layout_marginTop="@dimen/padding_default"
         android:textColor="@color/temperatureMax"
         tools:text="17°C" />
 

@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_home.*
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.Temperatures
 import nl.tcilegnar.weer9292.model.Weather
 import nl.tcilegnar.weer9292.ui.customview.TemperatureView
+import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHomeFragmentToWeatherDetailsFragment
 
 class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
@@ -28,20 +30,25 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeViewModel.currentWeatherDetails.observe(viewLifecycleOwner, Observer { currentWeatherDetails ->
+            currentWeatherDetails?.let {
+                Log.d("TEST", "currentWeatherDetails: $currentWeatherDetails")
+                home_weather_details.setOnClickListener {
+                    findNavController().navigate(actionHomeFragmentToWeatherDetailsFragment(currentWeatherDetails))
+                }
+            }
+        })
         homeViewModel.currentWeather.observe(viewLifecycleOwner, Observer { currentWeather ->
             currentWeather?.let {
                 setData(currentWeather)
-                home_location.setOnClickListener {
-                    // TODO (PK): show coordinates
-                }
-                home_weather_details.setOnClickListener {
-                    // TODO (PK): start WeatherDetailsFragment
-                }
             }
         })
         homeViewModel.currentCoordinates.observe(viewLifecycleOwner, Observer { currentCoordinates ->
             currentCoordinates?.let {
                 Log.d("TEST", "currentCoordinates: $currentCoordinates")
+                home_location.setOnClickListener {
+                    // TODO (PK): show coordinates
+                }
             }
         })
     }
