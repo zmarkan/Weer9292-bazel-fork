@@ -10,7 +10,16 @@
         android:id="@+id/navigation_home"
         android:name="nl.tcilegnar.weer9292.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/actionHomeFragmentToWeatherDetailsFragment"
+            app:destination="@id/weather_details_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_forecast"
@@ -23,4 +32,18 @@
         android:name="nl.tcilegnar.weer9292.ui.radar.RadarFragment"
         android:label="@string/title_radar"
         tools:layout="@layout/fragment_radar" />
+
+    <fragment
+        android:id="@+id/weather_details_fragment"
+        android:name="nl.tcilegnar.weer9292.ui.weatherdetail.WeatherDetailsFragment"
+        android:label="@string/title_weather_details"
+        tools:layout="@layout/fragment_weather_details">
+        <!-- We don't have a default value for WeatherDetails, so make default null and fail fast if we haven't set it! -->
+        <argument
+            android:name="weatherDetails"
+            android:defaultValue="@null"
+            app:argType="nl.tcilegnar.weer9292.model.WeatherDetails"
+            app:nullable="true" />
+    </fragment>
+
 </navigation>

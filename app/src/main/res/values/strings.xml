@@ -2,7 +2,26 @@
     <string name="title_home">Home</string>
     <string name="title_forecast">Forecast</string>
     <string name="title_radar">Radar</string>
+    <string name="title_weather_details">Radar</string>
     <string name="temperature_label_max">Max: </string>
     <string name="temperature_label_min">Min: </string>
     <string name="details">Details</string>
+    <string name="details_label_date">Date</string>
+    <string name="details_label_location">Location</string>
+    <string name="details_label_coordinates">Coordinates</string>
+    <string name="details_label_description">Description</string>
+    <string name="details_label_temperatures">Temperatures:</string>
+    <string name="details_label_temp_current">Current</string>
+    <string name="details_label_temp_feel">Feels like</string>
+    <string name="details_label_temp_max">Max. temperature</string>
+    <string name="details_label_temp_min">Min. temperature</string>
+    <string name="details_label_wind">Wind:</string>
+    <string name="details_label_wind_speed">Speed</string>
+    <string name="details_label_wind_angle">Angle</string>
+    <string name="details_label_wind_gust">Gust</string>
+    <string name="details_label_details">Details:</string>
+    <string name="details_label_pressure">Air pressure</string>
+    <string name="details_label_humidity">Humidity</string>
+    <string name="details_label_wind_sunrise">Sunrise</string>
+    <string name="details_label_wind_sunset">Sunset</string>
 </resources>
