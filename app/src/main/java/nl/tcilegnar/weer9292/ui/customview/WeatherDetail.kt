@@ -24,7 +24,7 @@ class WeatherDetail @JvmOverloads constructor(
 
     fun setValue(value: String?) {
         weather_detail_value.text = value
-        weather_detail_value.showIf(value != null && value.isNotBlank())
+        showIf(value != null && value.isNotBlank())
     }
 
     fun setValue(value: Any?) {
