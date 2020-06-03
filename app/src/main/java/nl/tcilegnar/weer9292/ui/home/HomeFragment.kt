@@ -1,5 +1,6 @@
 package nl.tcilegnar.weer9292.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,10 +15,16 @@ import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.Temperatures
 import nl.tcilegnar.weer9292.model.Weather
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
+import nl.tcilegnar.weer9292.ui.MainActivity
 import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHomeFragmentToWeatherDetailsFragment
 
 class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        setActionbarTitle("Loading...")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +61,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setData(weather: Weather) {
+        setActionbarTitle(weather.location.cityWithCountryCode.toString())
         home_location.text = weather.location.cityWithCountryCode.toString()
         home_date.text = weather.getDateTimeFormatted()
         weather_icon.setImageResource(weather.weatherCondition.getIconRes())
@@ -69,5 +77,9 @@ class HomeFragment : Fragment() {
         }
         home_temp_max.setTemperature(context, temperatures.temperatureMax)
         home_temp_min.setTemperature(context, temperatures.temperatureMin)
+    }
+
+    private fun setActionbarTitle(title: String) {
+        (context as MainActivity).setActionBarTitle(title)
     }
 }
