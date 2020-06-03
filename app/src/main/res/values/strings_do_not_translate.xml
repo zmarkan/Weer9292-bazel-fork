@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Weer9292</string>
     <string name="degreesCelciusUnit">°C</string>
-    <string name="degreesKelvinUnit">K</string>
+    <string name="degreesFahrenheitUnit">°F</string>
 </resources>

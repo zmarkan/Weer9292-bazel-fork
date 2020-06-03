@@ -8,6 +8,7 @@ import androidx.annotation.AttrRes
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.temperature_view.view.*
 import nl.tcilegnar.weer9292.R
+import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 
 class TemperatureView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, @AttrRes defStyleAttr: Int = 0
@@ -29,13 +30,6 @@ class TemperatureView @JvmOverloads constructor(
     }
 
     fun setTemperature(context: Context, temperature: Int) {
-        temperature_value.text = getTemperatureText(context, temperature)
-    }
-
-    companion object {
-        fun getTemperatureText(context: Context, temperature: Int): String {
-            val unit = context.getString(R.string.degreesCelciusUnit)
-            return "$temperature$unit"
-        }
+        temperature_value.text = TemperaturePrefs(context).getTemperatureText(temperature)
     }
 }

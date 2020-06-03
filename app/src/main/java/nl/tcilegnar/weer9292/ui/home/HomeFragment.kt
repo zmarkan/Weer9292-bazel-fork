@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.Temperatures
 import nl.tcilegnar.weer9292.model.Weather
-import nl.tcilegnar.weer9292.ui.customview.TemperatureView
+import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHomeFragmentToWeatherDetailsFragment
 
 class HomeFragment : Fragment() {
@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
     private fun setTemperatures(temperatures: Temperatures) {
         val context = requireContext()
         temperatures.currentTemperature?.let {
-            home_temp_now.text = TemperatureView.getTemperatureText(context, it)
+            home_temp_now.text = TemperaturePrefs(context).getTemperatureText(it)
         }
         home_temp_max.setTemperature(context, temperatures.temperatureMax)
         home_temp_min.setTemperature(context, temperatures.temperatureMin)
