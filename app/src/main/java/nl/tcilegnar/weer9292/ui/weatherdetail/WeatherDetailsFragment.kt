@@ -26,7 +26,7 @@ class WeatherDetailsFragment : Fragment() {
     private fun setData(weatherDetails: WeatherDetails) {
         val weather = weatherDetails.basicWeather
         weather_detail_date.setValue(weather.getDateTimeFormatted())
-        weather_detail_location.setValue(weather.location.cityWithCountryCode)
+        weather_detail_location.setValue(weather.location.getCityWithCountryCode())
         weather_detail_coordinates.setValue(weather.location.coordinates)
         weather_detail_description.setValue(weatherDetails.weatherDescription)
         weather_detail_temp_current.setTemperature(weather.temperatures.currentTemperature)

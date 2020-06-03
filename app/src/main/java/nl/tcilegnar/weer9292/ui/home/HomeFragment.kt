@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,10 +14,10 @@ import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.Temperatures
 import nl.tcilegnar.weer9292.model.Weather
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
-import nl.tcilegnar.weer9292.ui.MainActivity
+import nl.tcilegnar.weer9292.ui.BaseBottomNavigationFragment
 import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHomeFragmentToWeatherDetailsFragment
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseBottomNavigationFragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
 
@@ -49,13 +48,13 @@ class HomeFragment : Fragment() {
         })
         homeViewModel.currentWeather.observe(viewLifecycleOwner, Observer { currentWeather ->
             currentWeather?.let {
+                setActionbarTitle(currentWeather.location.getCityWithCountryCode().toString())
                 setData(currentWeather)
             }
         })
     }
 
     private fun setData(weather: Weather) {
-        setActionbarTitle(weather.location.cityWithCountryCode.toString())
         home_date.text = weather.getDateTimeFormatted()
         weather_icon.setImageResource(weather.weatherCondition.getIconRes())
         temperaturePrefs.getTemperatureUnitLiveDataString().observe(viewLifecycleOwner, Observer {
@@ -70,9 +69,5 @@ class HomeFragment : Fragment() {
         }
         home_temp_max.setTemperature(context, temperatures.temperatureMax)
         home_temp_min.setTemperature(context, temperatures.temperatureMin)
-    }
-
-    private fun setActionbarTitle(title: String) {
-        (context as MainActivity).setActionBarTitle(title)
     }
 }

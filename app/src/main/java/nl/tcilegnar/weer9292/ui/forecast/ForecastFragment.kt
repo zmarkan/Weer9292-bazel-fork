@@ -1,11 +1,11 @@
 package nl.tcilegnar.weer9292.ui.forecast
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -13,15 +13,19 @@ import kotlinx.android.synthetic.main.fragment_forecast.*
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
+import nl.tcilegnar.weer9292.ui.BaseBottomNavigationFragment
 import nl.tcilegnar.weer9292.ui.customview.ForecastColumn
 
-private const val NUMBER_OF_DAYS_SHOWN = 7
-
-class ForecastFragment : Fragment() {
+class ForecastFragment : BaseBottomNavigationFragment() {
     private lateinit var forecastViewModel: ForecastViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
 
     private var columns = arrayListOf<ForecastColumn>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        setActionbarTitle("Loading...")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,7 @@ class ForecastFragment : Fragment() {
         columns.addAll(columnContainer.children.map { it as ForecastColumn })
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { dailyForecast ->
             dailyForecast?.let {
-                // TODO (PK): it.location.cityWithCountryCode
+                setActionbarTitle(it.location.getCityWithCountryCode().toString())
                 setColumnData(it.weathers)
             }
         })
