@@ -17,7 +17,6 @@ class HomeViewModel(
     val currentWeather = Transformations.map(currentWeatherDetails) {
         it?.basicWeather
     }
-    val currentCoordinates = currentWeatherRepo.currentCoordinates
 
     init {
         currentWeatherRepo.getCurrentWeather(defaultCoordinates)

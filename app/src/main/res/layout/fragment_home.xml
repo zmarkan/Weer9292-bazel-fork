@@ -5,42 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/padding_default">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/home_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_default">
-
-        <TextView
-            android:id="@+id/home_location"
-            style="@style/homeHeaderText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            tools:text="Utrecht, NL" />
-
-        <TextView
-            android:id="@+id/home_date"
-            style="@style/homeHeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_default"
-            android:textStyle="italic"
-            tools:text="1 jan 2020" />
-    </LinearLayout>
+        android:textSize="20sp"
+        android:textStyle="italic"
+        tools:text="1 jan 2020" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_default">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/weather_icon"
@@ -88,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="32dp"
         android:background="@drawable/button_primary_background_states"
         android:text="@string/details"
         android:textColor="@color/white" />

@@ -15,8 +15,8 @@ class ForecastViewModel(
     }
 
     init {
-        currentWeatherRepo.currentCoordinates.value?.let {
-            forecastRepo.getDailyForecast(it)
+        currentWeatherRepo.currentWeatherResponse.value?.let {
+            forecastRepo.getDailyForecast(it.coordinates)
         }
     }
 }
