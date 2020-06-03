@@ -42,9 +42,7 @@ class ForecastRepository private constructor(
 
     val forecastResponse: LiveData<DailyForecastResponse?> = _forecastResponse
 
-    fun getDailyForecast(
-        coordinates: Coordinates
-    ) {
+    fun getDailyForecast(coordinates: Coordinates) {
         if (mocks.shouldUseMockedData) {
             _forecastResponse.postValue(mocks.mockedDailyForecastResponse)
             return

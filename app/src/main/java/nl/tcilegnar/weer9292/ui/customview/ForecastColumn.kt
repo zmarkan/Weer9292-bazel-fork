@@ -8,6 +8,7 @@ import androidx.annotation.AttrRes
 import kotlinx.android.synthetic.main.forecast_column.view.*
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.WeatherDetails
+import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 
 class ForecastColumn @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, @AttrRes defStyleAttr: Int = 0
@@ -25,8 +26,8 @@ class ForecastColumn @JvmOverloads constructor(
         forecast_day_of_week.text = weather.getDayOfWeekFormatted()
         forecast_date.text = weather.getDateFormatted()
         weather_icon.setImageResource(weather.weatherCondition.getIconRes())
-        forecast_temp_max.text = TemperatureView.getTemperatureText(context, weather.temperatures.temperatureMax)
-        forecast_temp_min.text = TemperatureView.getTemperatureText(context, weather.temperatures.temperatureMin)
+        forecast_temp_max.text = TemperaturePrefs(context).getTemperatureText(weather.temperatures.temperatureMax)
+        forecast_temp_min.text = TemperaturePrefs(context).getTemperatureText(weather.temperatures.temperatureMin)
 
         setOnClickListener {
             onForecastColumnClicked(weatherDetails)

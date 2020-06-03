@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.annotation.AttrRes
 import kotlinx.android.synthetic.main.weather_detail.view.*
 import nl.tcilegnar.weer9292.R
+import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 import nl.tcilegnar.weer9292.util.extensions.showIf
 
 class WeatherDetail @JvmOverloads constructor(
@@ -24,7 +25,7 @@ class WeatherDetail @JvmOverloads constructor(
 
     fun setValue(value: String?) {
         weather_detail_value.text = value
-        showIf(value != null && value.isNotBlank())
+        showIf(value?.isNotBlank() ?: false)
     }
 
     fun setValue(value: Any?) {
@@ -33,7 +34,7 @@ class WeatherDetail @JvmOverloads constructor(
 
     fun setTemperature(temperature: Int?) {
         setValue(temperature?.let {
-            TemperatureView.getTemperatureText(context, it)
+            TemperaturePrefs(context).getTemperatureText(it)
         })
     }
 }

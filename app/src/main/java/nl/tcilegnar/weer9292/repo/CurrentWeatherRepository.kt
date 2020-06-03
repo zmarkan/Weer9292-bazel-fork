@@ -42,7 +42,6 @@ class CurrentWeatherRepo private constructor(
     }
 
     val currentWeatherResponse: LiveData<CurrentWeatherResponse?> = _currentWeatherResponse
-    val currentCoordinates: LiveData<Coordinates?> = Transformations.map(currentWeatherResponse) { it?.coordinates }
 
     fun getCurrentWeather(
         coordinates: Coordinates

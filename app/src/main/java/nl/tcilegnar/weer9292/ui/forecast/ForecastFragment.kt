@@ -12,17 +12,21 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_forecast.*
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.WeatherDetails
+import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 import nl.tcilegnar.weer9292.ui.customview.ForecastColumn
 
 private const val NUMBER_OF_DAYS_SHOWN = 7
 
 class ForecastFragment : Fragment() {
     private lateinit var forecastViewModel: ForecastViewModel
+    private lateinit var temperaturePrefs: TemperaturePrefs
+
     private var columns = arrayListOf<ForecastColumn>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         forecastViewModel = ViewModelProvider(this).get(ForecastViewModel::class.java)
+        temperaturePrefs = TemperaturePrefs(requireContext())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,11 +39,17 @@ class ForecastFragment : Fragment() {
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { dailyForecast ->
             dailyForecast?.let {
                 // TODO (PK): it.location.cityWithCountryCode
-                it.weathers.take(columns.size).forEachIndexed { index, weatherDetails ->
-                    setColumnData(index, weatherDetails)
-                }
+                setColumnData(it.weathers)
             }
         })
+    }
+
+    private fun setColumnData(dailyWeatherDetails: List<WeatherDetails>) {
+        dailyWeatherDetails.take(columns.size).forEachIndexed { index, weatherDetails ->
+            temperaturePrefs.getTemperatureUnitLiveDataString().observe(viewLifecycleOwner, Observer {
+                setColumnData(index, weatherDetails)
+            })
+        }
     }
 
     private fun setColumnData(index: Int, weatherDetails: WeatherDetails) {
