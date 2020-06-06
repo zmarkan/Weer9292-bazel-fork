@@ -64,19 +64,22 @@ class CurrentWeatherRepo private constructor(
     }
 
     fun getCurrentWeather(
-        locationSearchText: String
+        cityName: String
     ) {
         if (mocks.shouldUseMockedData) {
             updateResponse(mocks.mockedCurrentWeatherResponse)
             return
         }
-        Log.d("API", "get weather for $locationSearchText")
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                Thread.sleep(1000)
-                // TODO (PK): start API call
-                updateResponse(mocks.mockedCurrentWeatherResponse)
+                val response = weatherService.getCurrentWeatherSearch(cityName)
+                // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
+                if (response.results.isNotEmpty()) {
+                    updateResponse(response.results[0])
+                } else {
+                    // TODO (PK): show "no results" message, and don't updateResponse!
+                }
             } catch (e: Exception) {
                 // TODO: improve user feedback on error
                 Log.w(TAG, "Error on getCurrentWeather: ", e)

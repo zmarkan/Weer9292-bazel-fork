@@ -19,7 +19,7 @@ class HomeViewModel(
         currentWeatherRepo.getCurrentWeather(defaultCoordinates)
     }
 
-    fun getCurrentWeather(locationSearchText: String) {
-        currentWeatherRepo.getCurrentWeather(locationSearchText)
+    fun getCurrentWeather(cityName: String) {
+        currentWeatherRepo.getCurrentWeather(cityName)
     }
 }
