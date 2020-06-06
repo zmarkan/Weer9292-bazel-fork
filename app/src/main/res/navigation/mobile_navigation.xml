@@ -9,7 +9,6 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="nl.tcilegnar.weer9292.ui.home.HomeFragment"
-        android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/actionHomeFragmentToWeatherDetailsFragment"
@@ -24,7 +23,6 @@
     <fragment
         android:id="@+id/navigation_forecast"
         android:name="nl.tcilegnar.weer9292.ui.forecast.ForecastFragment"
-        android:label="@string/title_forecast"
         tools:layout="@layout/fragment_forecast">
         <action
             android:id="@+id/actionForecastFragmentToWeatherDetailsFragment"
@@ -39,13 +37,11 @@
     <fragment
         android:id="@+id/navigation_radar"
         android:name="nl.tcilegnar.weer9292.ui.radar.RadarFragment"
-        android:label="@string/title_radar"
         tools:layout="@layout/fragment_radar" />
 
     <fragment
         android:id="@+id/weather_details_fragment"
         android:name="nl.tcilegnar.weer9292.ui.weatherdetail.WeatherDetailsFragment"
-        android:label="@string/title_weather_details"
         tools:layout="@layout/fragment_weather_details">
         <!-- We don't have a default value for WeatherDetails, so make default null and fail fast if we haven't set it! -->
         <argument

@@ -1,6 +1,5 @@
 package nl.tcilegnar.weer9292.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,11 +18,6 @@ import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHome
 class HomeFragment : BaseBottomNavigationFragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        setActionbarTitle("Loading...")
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

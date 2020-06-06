@@ -63,6 +63,27 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
+    fun getCurrentWeather(
+        locationSearchText: String
+    ) {
+        if (mocks.shouldUseMockedData) {
+            updateResponse(mocks.mockedCurrentWeatherResponse)
+            return
+        }
+        Log.d("API", "get weather for $locationSearchText")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                Thread.sleep(1000)
+                // TODO (PK): start API call
+                updateResponse(mocks.mockedCurrentWeatherResponse)
+            } catch (e: Exception) {
+                // TODO: improve user feedback on error
+                Log.w(TAG, "Error on getCurrentWeather: ", e)
+            }
+        }
+    }
+
     private fun updateResponse(currentWeatherResponse: CurrentWeatherResponse) {
         _weatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
     }
