@@ -39,6 +39,7 @@ class ForecastFragment : BaseBottomNavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        columns.clear()
         columns.addAll(columnContainer.children.map { it as ForecastColumn })
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { dailyForecast ->
             dailyForecast?.let {

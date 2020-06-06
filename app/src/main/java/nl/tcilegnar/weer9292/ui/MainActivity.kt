@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> {
+            onBackPressed()
+            true
+        }
         R.id.action_settings -> {
             temperaturePrefs.toggleTemperatureUnit()
             true
