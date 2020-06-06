@@ -1,4 +1,5 @@
 <resources>
+    <string name="search_hint">Search location</string>
     <string name="toggle_temperature_unit">Toggle Celcius and Fahrenheit</string>
     <string name="title_home">Home</string>
     <string name="title_forecast">Forecast</string>

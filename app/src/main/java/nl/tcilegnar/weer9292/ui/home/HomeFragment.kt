@@ -2,7 +2,6 @@ package nl.tcilegnar.weer9292.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +39,6 @@ class HomeFragment : BaseBottomNavigationFragment() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.currentWeatherDetails.observe(viewLifecycleOwner, Observer { currentWeatherDetails ->
             currentWeatherDetails?.let {
-                Log.d("TEST", "currentWeatherDetails: $currentWeatherDetails")
                 home_weather_details.setOnClickListener {
                     findNavController().navigate(actionHomeFragmentToWeatherDetailsFragment(currentWeatherDetails))
                 }
