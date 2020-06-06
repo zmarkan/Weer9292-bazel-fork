@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.TemperatureUnit
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity(), OnQueryTextListener {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
     private lateinit var searchView: MenuItem
+
+    private var currentTitle: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +49,20 @@ class MainActivity : AppCompatActivity(), OnQueryTextListener {
 
         homeViewModel.currentWeather.observe(this, Observer { currentWeather ->
             currentWeather?.let {
-                setActionBarTitle(currentWeather.location.getCityWithCountryCode().toString())
-            } ?: run {
+                currentTitle = currentWeather.location.getCityWithCountryCode().toString()
+                setActionBarTitle(currentTitle)
+            }
+        })
+        homeViewModel.isLoading.observe(this, Observer {
+            if (it) {
                 showLoading()
+            } else {
+                setActionBarTitle(currentTitle)
+            }
+        })
+        homeViewModel.errorMessage.observe(this, Observer {
+            if (it.isNotBlank()) {
+                Snackbar.make(findViewById(android.R.id.content), it, Snackbar.LENGTH_LONG).show()
             }
         })
     }

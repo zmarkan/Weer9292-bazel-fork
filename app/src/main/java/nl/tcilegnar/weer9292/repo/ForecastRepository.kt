@@ -1,6 +1,5 @@
 package nl.tcilegnar.weer9292.repo
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +17,7 @@ private const val TAG = "ForecastRepository"
 class ForecastRepository private constructor(
     private val weatherService: WeatherServices = WeatherApi.getInstance().service,
     private val mocks: Mocks = Mocks()
-) {
+) : ApiCallRepo() {
     // Quick singleton implementation
     companion object {
         @Volatile
@@ -49,19 +48,19 @@ class ForecastRepository private constructor(
             return
         }
 
+        startLoading()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = weatherService.getDailyForecast(lat = coordinates.lat, lon = coordinates.lon)
-                // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
                 updateResponse(response)
             } catch (e: Exception) {
-                // TODO: improve user feedback on error
-                Log.w(TAG, "Error on getDailyForecast: ", e)
+                onError("Unable to retrieve forecast: something went wrong.", e)
             }
         }
     }
 
     private fun updateResponse(dailyForecastResponse: DailyForecastResponse) {
+        stopLoading()
         _dailyForecast.postValue(DailyForecast.from(dailyForecastResponse))
     }
 }

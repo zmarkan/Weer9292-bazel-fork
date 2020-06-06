@@ -1,6 +1,5 @@
 package nl.tcilegnar.weer9292.repo
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +17,7 @@ private const val TAG = "CurrentWeatherRepo"
 class CurrentWeatherRepo private constructor(
     private val weatherService: WeatherServices = WeatherApi.getInstance().service,
     private val mocks: Mocks = Mocks()
-) {
+) : ApiCallRepo() {
     // Quick singleton implementation
     companion object {
         @Volatile
@@ -37,10 +36,7 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
-    private val _currentWeatherDetails = MutableLiveData<WeatherDetails?>().apply {
-        value = null
-    }
-
+    private val _currentWeatherDetails = MutableLiveData<WeatherDetails?>(null)
     val currentWeatherDetails: LiveData<WeatherDetails?> = _currentWeatherDetails
 
     fun getCurrentWeather(
@@ -51,14 +47,13 @@ class CurrentWeatherRepo private constructor(
             return
         }
 
+        startLoading()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = weatherService.getCurrentWeather(lat = coordinates.lat, lon = coordinates.lon)
-                // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
                 updateResponse(response)
             } catch (e: Exception) {
-                // TODO: improve user feedback on error
-                Log.w(TAG, "Error on getCurrentWeather: ", e)
+                onError("Unable to retrieve current weather: something went wrong.", e)
             }
         }
     }
@@ -71,23 +66,23 @@ class CurrentWeatherRepo private constructor(
             return
         }
 
+        startLoading()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = weatherService.getCurrentWeatherSearch(cityName)
-                // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
                 if (response.results.isNotEmpty()) {
                     updateResponse(response.results[0])
                 } else {
-                    // TODO (PK): show "no results" message, and don't updateResponse!
+                    onError("No result found for $cityName")
                 }
             } catch (e: Exception) {
-                // TODO: improve user feedback on error
-                Log.w(TAG, "Error on getCurrentWeather: ", e)
+                onError("Unable to retrieve current weather for $cityName: something went wrong.", e)
             }
         }
     }
 
     private fun updateResponse(currentWeatherResponse: CurrentWeatherResponse) {
+        stopLoading()
         _currentWeatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
     }
 }
