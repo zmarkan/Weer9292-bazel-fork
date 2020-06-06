@@ -1,10 +1,5 @@
 package nl.tcilegnar.weer9292.repo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
@@ -16,8 +11,8 @@ private const val TAG = "CurrentWeatherRepo"
 
 class CurrentWeatherRepo private constructor(
     private val weatherService: WeatherServices = WeatherApi.getInstance().service,
-    private val mocks: Mocks = Mocks()
-) : ApiCallRepo() {
+    mocks: Mocks = Mocks()
+) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>(mocks) {
     // Quick singleton implementation
     companion object {
         @Volatile
@@ -36,53 +31,36 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
-    private val _currentWeatherDetails = MutableLiveData<WeatherDetails?>(null)
-    val currentWeatherDetails: LiveData<WeatherDetails?> = _currentWeatherDetails
-
     fun getCurrentWeather(
         coordinates: Coordinates
     ) {
-        if (mocks.shouldUseMockedData) {
-            updateResponse(mocks.mockedCurrentWeatherResponse)
-            return
-        }
-
-        startLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = weatherService.getCurrentWeather(lat = coordinates.lat, lon = coordinates.lon)
-                updateResponse(response)
-            } catch (e: Exception) {
-                onError("Unable to retrieve current weather: something went wrong.", e)
-            }
-        }
+        startApiCall({
+            weatherService.getCurrentWeather(lat = coordinates.lat, lon = coordinates.lon)
+        }, processNetworkResponse = {
+            WeatherDetails.from(it)
+        }, handleError = {
+            "Unable to retrieve current weather: something went wrong."
+        }, mockData = {
+            it.mockedCurrentWeatherResponse
+        })
     }
 
     fun getCurrentWeather(
         cityName: String
     ) {
-        if (mocks.shouldUseMockedData) {
-            updateResponse(mocks.mockedCurrentWeatherResponse)
-            return
-        }
-
-        startLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = weatherService.getCurrentWeatherSearch(cityName)
-                if (response.results.isNotEmpty()) {
-                    updateResponse(response.results[0])
-                } else {
-                    onError("No result found for $cityName")
-                }
-            } catch (e: Exception) {
-                onError("Unable to retrieve current weather for $cityName: something went wrong.", e)
+        startApiCall({
+            val response = weatherService.getCurrentWeatherSearch(cityName)
+            response.results.first()
+        }, processNetworkResponse = {
+            WeatherDetails.from(it)
+        }, handleError = {
+            if (it is NoSuchElementException) { // easy way to catch if there is no 'first' result. Could have used a custom exception for more reliability
+                "No result found for $cityName"
+            } else {
+                "Unable to retrieve current weather for $cityName: something went wrong."
             }
-        }
-    }
-
-    private fun updateResponse(currentWeatherResponse: CurrentWeatherResponse) {
-        stopLoading()
-        _currentWeatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
+        }, mockData = {
+            it.mockedCurrentWeatherResponse
+        })
     }
 }
