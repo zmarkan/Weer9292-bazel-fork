@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.repo.CurrentWeatherRepo
 
-private val defaultCoordinates = Coordinates.get9292HQ()
-
 class HomeViewModel(
     private val currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
 ) : ViewModel() {
@@ -17,8 +15,8 @@ class HomeViewModel(
     val isLoading = currentWeatherRepo.isLoading
     val errorMessage = currentWeatherRepo.errorMessage
 
-    init {
-        currentWeatherRepo.getCurrentWeather(defaultCoordinates)
+    fun getCurrentWeather(coordinates: Coordinates) {
+        currentWeatherRepo.getCurrentWeather(coordinates)
     }
 
     fun getCurrentWeather(cityName: String) {

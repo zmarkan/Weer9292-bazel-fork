@@ -16,10 +16,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.TemperatureUnit
+import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 import nl.tcilegnar.weer9292.ui.home.HomeViewModel
 
 class MainActivity : AppCompatActivity(), OnQueryTextListener {
+    companion object {
+        private val defaultCoordinates = Coordinates.get9292HQ()
+    }
+
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
     private lateinit var searchView: MenuItem
@@ -65,6 +70,11 @@ class MainActivity : AppCompatActivity(), OnQueryTextListener {
                 Snackbar.make(findViewById(android.R.id.content), it, Snackbar.LENGTH_LONG).show()
             }
         })
+
+        // Start app with current weather from default location
+        if (savedInstanceState == null) {
+            homeViewModel.getCurrentWeather(defaultCoordinates)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
