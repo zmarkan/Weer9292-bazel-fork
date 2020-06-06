@@ -17,8 +17,8 @@ data class WeatherDetails(
     val weatherDescription: String,
     val pressure: Int,
     val humidity: Int,
-    val sunriseDateTime: DateTime,
-    val sunsetDateTime: DateTime
+    val sunriseDateTime: DateTime?,
+    val sunsetDateTime: DateTime?
 ) : Parcelable {
     companion object {
         private val epochCalculator = EpochCalculator()
@@ -28,8 +28,8 @@ data class WeatherDetails(
             response.weatherTypes.toFullWeatherTypeDescription(),
             response.properties.pressure,
             response.properties.humidity,
-            epochCalculator.epochToDateTime(response.sys.sunriseEpoch),
-            epochCalculator.epochToDateTime(response.sys.sunsetEpoch)
+            response.sys.sunriseEpoch?.let { epochCalculator.epochToDateTime(it) },
+            response.sys.sunsetEpoch?.let { epochCalculator.epochToDateTime(it) }
         )
 
         fun from(response: DailyWeatherResponse, location: Location) = WeatherDetails(
@@ -42,7 +42,7 @@ data class WeatherDetails(
         )
     }
 
-    fun getSunriseTimeFormatted(): String = DateTimeFormat.forPattern("H:mm").print(sunriseDateTime)
+    fun getSunriseTimeFormatted(): String? = sunriseDateTime?.let { DateTimeFormat.forPattern("H:mm").print(it) }
 
-    fun getSunsetTimeFormatted(): String = DateTimeFormat.forPattern("H:mm").print(sunsetDateTime)
+    fun getSunsetTimeFormatted(): String? = sunsetDateTime?.let { DateTimeFormat.forPattern("H:mm").print(it) }
 }

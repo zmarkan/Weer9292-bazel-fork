@@ -1,5 +1,6 @@
 package nl.tcilegnar.weer9292.model
 
+import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.*
 import org.joda.time.DateTime
 import org.junit.Assert.assertEquals
@@ -46,8 +47,44 @@ class WeatherDetailsTest {
             "broken clouds,\nclear skies",
             PRESSURE,
             HUMIDITY,
-            SUNRISE_EPOCH,
-            SUNSET_EPOCH
+            SUNRISE_EPOCH.toDateTime(),
+            SUNSET_EPOCH.toDateTime()
+        )
+        assertEquals(expectedWeatherDetails, weatherDetails)
+    }
+
+    /** The response from [WeatherServices.getCurrentWeatherSearch] contains some null values in the [Sys] object */
+    @Test
+    fun weatherDetailsFromCurrentWeatherResponse_fromSearchWithNullValues() {
+        val response = CurrentWeatherResponse(
+            0,
+            WeatherProperties(1.0, 2.0, 3.0, 4.0, PRESSURE, HUMIDITY),
+            listOf(
+                WeatherType(803, "Clouds", "broken clouds"),
+                WeatherType(800, "Sunny", "clear skies")
+            ),
+            WIND,
+            COORDINATES,
+            Sys(null, COUNTRY_CODE, null, null),
+            CITY,
+            CITY_ID
+        )
+
+        val weatherDetails = WeatherDetails.from(response)
+
+        val expectedWeatherDetails = WeatherDetails(
+            Weather(
+                DateTime(0),
+                Location(CITY_ID, CITY, COUNTRY_CODE, COORDINATES),
+                WeatherCondition.SUN,
+                Temperatures(1, 2, 3, 4),
+                WIND
+            ),
+            "broken clouds,\nclear skies",
+            PRESSURE,
+            HUMIDITY,
+            null,
+            null
         )
         assertEquals(expectedWeatherDetails, weatherDetails)
     }
@@ -84,9 +121,11 @@ class WeatherDetailsTest {
             "broken clouds,\nclear skies",
             PRESSURE,
             HUMIDITY,
-            SUNRISE_EPOCH,
-            SUNSET_EPOCH
+            SUNRISE_EPOCH.toDateTime(),
+            SUNSET_EPOCH.toDateTime()
         )
         assertEquals(expectedWeatherDetails, weatherDetails)
     }
 }
+
+private fun Long.toDateTime() = DateTime(this * 1000)

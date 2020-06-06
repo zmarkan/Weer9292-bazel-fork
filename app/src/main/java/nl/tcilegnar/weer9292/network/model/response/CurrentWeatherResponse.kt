@@ -1,6 +1,7 @@
 package nl.tcilegnar.weer9292.network.model.response
 
 import com.google.gson.annotations.SerializedName
+import nl.tcilegnar.weer9292.network.WeatherServices
 
 data class CurrentWeatherResponse(
     @SerializedName("dt")
@@ -21,13 +22,14 @@ data class CurrentWeatherResponse(
     val cityId: Long
 )
 
+/** Several of these fields are null when calling [WeatherServices.getCurrentWeatherSearch] */
 data class Sys(
     @SerializedName("id")
-    val id: Long,
+    val id: Long?,
     @SerializedName("country")
     val countryCode: String,
     @SerializedName("sunrise")
-    val sunriseEpoch: Long,
+    val sunriseEpoch: Long?,
     @SerializedName("sunset")
-    val sunsetEpoch: Long
+    val sunsetEpoch: Long?
 )
