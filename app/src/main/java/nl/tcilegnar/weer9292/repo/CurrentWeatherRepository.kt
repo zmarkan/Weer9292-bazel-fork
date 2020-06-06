@@ -37,11 +37,11 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
-    private val _weatherDetails = MutableLiveData<WeatherDetails?>().apply {
+    private val _currentWeatherDetails = MutableLiveData<WeatherDetails?>().apply {
         value = null
     }
 
-    val weatherDetails: LiveData<WeatherDetails?> = _weatherDetails
+    val currentWeatherDetails: LiveData<WeatherDetails?> = _currentWeatherDetails
 
     fun getCurrentWeather(
         coordinates: Coordinates
@@ -85,6 +85,6 @@ class CurrentWeatherRepo private constructor(
     }
 
     private fun updateResponse(currentWeatherResponse: CurrentWeatherResponse) {
-        _weatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
+        _currentWeatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
     }
 }

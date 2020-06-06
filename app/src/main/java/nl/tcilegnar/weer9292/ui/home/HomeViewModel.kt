@@ -10,7 +10,7 @@ private val defaultCoordinates = Coordinates.get9292HQ()
 class HomeViewModel(
     private val currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
 ) : ViewModel() {
-    val currentWeatherDetails = currentWeatherRepo.weatherDetails
+    val currentWeatherDetails = currentWeatherRepo.currentWeatherDetails
     val currentWeather = Transformations.map(currentWeatherDetails) {
         it?.basicWeather
     }
