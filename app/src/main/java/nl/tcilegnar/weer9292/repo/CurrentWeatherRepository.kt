@@ -3,10 +3,10 @@ package nl.tcilegnar.weer9292.repo
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
@@ -37,17 +37,17 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
-    private val _currentWeatherResponse = MutableLiveData<CurrentWeatherResponse?>().apply {
+    private val _weatherDetails = MutableLiveData<WeatherDetails?>().apply {
         value = null
     }
 
-    val currentWeatherResponse: LiveData<CurrentWeatherResponse?> = _currentWeatherResponse
+    val weatherDetails: LiveData<WeatherDetails?> = _weatherDetails
 
     fun getCurrentWeather(
         coordinates: Coordinates
     ) {
         if (mocks.shouldUseMockedData) {
-            _currentWeatherResponse.postValue(mocks.mockedCurrentWeatherResponse)
+            updateResponse(mocks.mockedCurrentWeatherResponse)
             return
         }
 
@@ -55,11 +55,15 @@ class CurrentWeatherRepo private constructor(
             try {
                 val response = weatherService.getCurrentWeather(lat = coordinates.lat, lon = coordinates.lon)
                 // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
-                _currentWeatherResponse.postValue(response)
+                updateResponse(response)
             } catch (e: Exception) {
                 // TODO: improve user feedback on error
                 Log.w(TAG, "Error on getCurrentWeather: ", e)
             }
         }
+    }
+
+    private fun updateResponse(currentWeatherResponse: CurrentWeatherResponse) {
+        _weatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
     }
 }
