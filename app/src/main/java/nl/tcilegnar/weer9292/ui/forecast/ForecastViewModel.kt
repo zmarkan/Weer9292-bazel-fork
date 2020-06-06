@@ -9,10 +9,10 @@ class ForecastViewModel(
     forecastRepo: ForecastRepository = ForecastRepository.getInstance(),
     currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
 ) : ViewModel() {
-    val forecast = Transformations.switchMap(currentWeatherRepo.currentWeatherDetails) {
+    val forecast = Transformations.switchMap(currentWeatherRepo.response) {
         it?.let {
             forecastRepo.getDailyForecast(it.basicWeather.location.coordinates)
         }
-        forecastRepo.dailyForecast
+        forecastRepo.response
     }
 }
