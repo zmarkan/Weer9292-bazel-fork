@@ -37,11 +37,11 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
-    private val _weatherDetails = MutableLiveData<WeatherDetails?>().apply {
+    private val _currentWeatherDetails = MutableLiveData<WeatherDetails?>().apply {
         value = null
     }
 
-    val weatherDetails: LiveData<WeatherDetails?> = _weatherDetails
+    val currentWeatherDetails: LiveData<WeatherDetails?> = _currentWeatherDetails
 
     fun getCurrentWeather(
         coordinates: Coordinates
@@ -63,7 +63,31 @@ class CurrentWeatherRepo private constructor(
         }
     }
 
+    fun getCurrentWeather(
+        cityName: String
+    ) {
+        if (mocks.shouldUseMockedData) {
+            updateResponse(mocks.mockedCurrentWeatherResponse)
+            return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = weatherService.getCurrentWeatherSearch(cityName)
+                // TODO: improve response handling (check isSuccess, handle failed, convert to a useful model for on view side, etc)
+                if (response.results.isNotEmpty()) {
+                    updateResponse(response.results[0])
+                } else {
+                    // TODO (PK): show "no results" message, and don't updateResponse!
+                }
+            } catch (e: Exception) {
+                // TODO: improve user feedback on error
+                Log.w(TAG, "Error on getCurrentWeather: ", e)
+            }
+        }
+    }
+
     private fun updateResponse(currentWeatherResponse: CurrentWeatherResponse) {
-        _weatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
+        _currentWeatherDetails.postValue(WeatherDetails.from(currentWeatherResponse))
     }
 }

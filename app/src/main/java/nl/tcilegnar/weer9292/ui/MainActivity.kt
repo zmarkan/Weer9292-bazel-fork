@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -13,15 +16,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.TemperatureUnit
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
+import nl.tcilegnar.weer9292.ui.home.HomeViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnQueryTextListener {
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
-    private lateinit var menu: Menu
+    private lateinit var searchView: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         temperaturePrefs = TemperaturePrefs(this)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -38,15 +43,26 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        homeViewModel.currentWeather.observe(this, Observer { currentWeather ->
+            currentWeather?.let {
+                setActionBarTitle(currentWeather.location.getCityWithCountryCode().toString())
+            } ?: run {
+                showLoading()
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.settings, menu)
-        this.menu = menu
+
         temperaturePrefs.getTemperatureUnitLiveDataString().observe(this, Observer {
             val newIcon = TemperatureUnit.valueOf(it)
-            menu.getItem(0).icon = newIcon.getMenuIcon(this)
+            menu.findItem(R.id.action_settings).icon = newIcon.getMenuIcon(this)
         })
+
+        searchView = menu.findItem(R.id.action_search)
+        (searchView.actionView as SearchView).setOnQueryTextListener(this)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -64,5 +80,22 @@ class MainActivity : AppCompatActivity() {
 
     fun setActionBarTitle(title: String?) {
         supportActionBar!!.title = title
+    }
+
+    private fun showLoading() {
+        setActionBarTitle("Loading...")
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query?.isNotBlank() == true) {
+            searchView.collapseActionView()
+            showLoading()
+            homeViewModel.getCurrentWeather(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return true
     }
 }

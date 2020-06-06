@@ -1,6 +1,5 @@
 package nl.tcilegnar.weer9292.ui.forecast
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,11 +21,6 @@ class ForecastFragment : BaseBottomNavigationFragment() {
 
     private var columns = arrayListOf<ForecastColumn>()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        setActionbarTitle("Loading...")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         forecastViewModel = ViewModelProvider(this).get(ForecastViewModel::class.java)
@@ -43,7 +37,6 @@ class ForecastFragment : BaseBottomNavigationFragment() {
         columns.addAll(columnContainer.children.map { it as ForecastColumn })
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { dailyForecast ->
             dailyForecast?.let {
-                setActionbarTitle(it.location.getCityWithCountryCode().toString())
                 setColumnData(it.weathers)
             }
         })

@@ -1,9 +1,9 @@
 <resources>
+    <string name="search_hint">Search location</string>
     <string name="toggle_temperature_unit">Toggle Celcius and Fahrenheit</string>
     <string name="title_home">Home</string>
     <string name="title_forecast">Forecast</string>
     <string name="title_radar">Radar</string>
-    <string name="title_weather_details">Weather details</string>
     <string name="temperature_label_max">Max: </string>
     <string name="temperature_label_min">Min: </string>
     <string name="details">Details</string>
