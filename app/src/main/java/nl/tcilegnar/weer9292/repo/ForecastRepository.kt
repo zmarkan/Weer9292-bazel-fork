@@ -7,8 +7,6 @@ import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.network.model.response.DailyForecastResponse
 import nl.tcilegnar.weer9292.network.util.Mocks
 
-private const val TAG = "ForecastRepository"
-
 class ForecastRepository private constructor(
     private val weatherService: WeatherServices = WeatherApi.getInstance().service,
     mocks: Mocks = Mocks()

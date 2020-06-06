@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import nl.tcilegnar.weer9292.network.util.Mocks
 
-private const val TAG = "API"
+private const val TAG_API = "API"
 
 abstract class ApiCallRepo<NetworkResponseType, ResponseType>(
     private val mocks: Mocks
@@ -30,7 +30,7 @@ abstract class ApiCallRepo<NetworkResponseType, ResponseType>(
 
     private fun onError(errorMessage: String, throwable: Throwable? = null) {
         stopLoading()
-        Log.e(TAG, errorMessage, throwable)
+        Log.e(TAG_API, errorMessage, throwable)
         _errorMessage.postValue(errorMessage)
     }
 
@@ -45,6 +45,8 @@ abstract class ApiCallRepo<NetworkResponseType, ResponseType>(
             try {
                 val networkResponse = if (mocks.shouldUseMockedData) mockData(mocks) else startNetworkCall()
                 val processedResponse = processNetworkResponse(networkResponse)
+                Log.d(TAG_API, "<--- networkResponse: $networkResponse")
+                Log.d(TAG_API, "<--- processedResponse: $processedResponse")
                 stopLoading()
                 _response.postValue(processedResponse)
             } catch (e: Exception) {
