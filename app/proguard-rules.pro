@@ -55,4 +55,4 @@
 ##### Custom exclusions for this project: #####
 
 ### Retrofit models for request/response calls should not be obfuscated:
-#-keep class nl.tcilegnar.weer9292.network.model.** { *; } # Retrofit handles this automatically now?
+-keep class nl.tcilegnar.weer9292.network.model.response.** { *; }

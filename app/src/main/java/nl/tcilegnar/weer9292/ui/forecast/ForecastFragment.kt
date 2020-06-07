@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_forecast.*
@@ -12,13 +13,12 @@ import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.dagger.factories.ViewModelFactory
 import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
-import nl.tcilegnar.weer9292.ui.BaseBottomNavigationFragment
 import nl.tcilegnar.weer9292.ui.customview.ForecastColumn
 import nl.tcilegnar.weer9292.util.extensions.getViewModel
 
 class ForecastFragment(
     private val forecastVMF: ViewModelFactory<ForecastViewModel>
-) : BaseBottomNavigationFragment() {
+) : Fragment() {
     private lateinit var forecastViewModel: ForecastViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
 
