@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,10 +13,9 @@ import nl.tcilegnar.weer9292.R
 import nl.tcilegnar.weer9292.model.Temperatures
 import nl.tcilegnar.weer9292.model.Weather
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
-import nl.tcilegnar.weer9292.ui.BaseBottomNavigationFragment
 import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHomeFragmentToWeatherDetailsFragment
 
-class HomeFragment : BaseBottomNavigationFragment() {
+class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
 
@@ -40,7 +40,6 @@ class HomeFragment : BaseBottomNavigationFragment() {
         })
         homeViewModel.currentWeather.observe(viewLifecycleOwner, Observer { currentWeather ->
             currentWeather?.let {
-                setActionbarTitle(currentWeather.location.getCityWithCountryCode().toString())
                 setData(currentWeather)
             }
         })
