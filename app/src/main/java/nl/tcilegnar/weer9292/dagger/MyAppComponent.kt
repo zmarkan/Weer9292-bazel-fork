@@ -1,11 +1,8 @@
 package nl.tcilegnar.weer9292.dagger
 
 import android.app.Application
-import android.content.Context
-import dagger.Binds
 import dagger.BindsInstance
 import dagger.Component
-import dagger.Module
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import nl.tcilegnar.weer9292.MyApp
@@ -18,7 +15,6 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         ActivityContributor::class,
-        ApplicationBindings::class,
         ApiModule::class
     ]
 )
@@ -32,10 +28,4 @@ interface MyAppComponent : AndroidInjector<MyApp> {
 
         fun build(): MyAppComponent
     }
-}
-
-@Module
-abstract class ApplicationBindings {
-    @Binds
-    abstract fun bindsContext(context: Application): Context
 }
