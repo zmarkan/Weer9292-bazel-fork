@@ -3,11 +3,11 @@ package nl.tcilegnar.weer9292.ui.forecast
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import nl.tcilegnar.weer9292.repo.CurrentWeatherRepo
-import nl.tcilegnar.weer9292.repo.ForecastRepository
+import nl.tcilegnar.weer9292.repo.ForecastRepo
 import javax.inject.Inject
 
 class ForecastViewModel @Inject constructor(
-    private val forecastRepo: ForecastRepository,
+    private val forecastRepo: ForecastRepo,
     private val currentWeatherRepo: CurrentWeatherRepo
 ) : ViewModel() {
     val forecast = Transformations.switchMap(currentWeatherRepo.response) {

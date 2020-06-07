@@ -5,37 +5,16 @@ import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface CurrentWeatherRepo : IApiCallRepository<WeatherDetails> {
-    fun getCurrentWeather(coordinates: Coordinates)
-    fun getCurrentWeather(cityName: String)
-    fun testHomeRepo()
-}
+interface ICurrentWeatherRepo
 
-class CurrentWeatherRepoImpl private constructor(
+@Singleton
+class CurrentWeatherRepo @Inject constructor(
     private val weatherService: WeatherServices
-) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>(), CurrentWeatherRepo {
-    // Quick singleton implementation
-    companion object {
-        @Volatile
-        private var INSTANCE: CurrentWeatherRepoImpl? = null
-
-        fun getInstance(
-            weatherService: WeatherServices
-        ): CurrentWeatherRepoImpl {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = CurrentWeatherRepoImpl(weatherService)
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }
-
-    override fun getCurrentWeather(
+) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>(), ICurrentWeatherRepo {
+    fun getCurrentWeather(
         coordinates: Coordinates
     ) {
         startApiCall({
@@ -47,7 +26,7 @@ class CurrentWeatherRepoImpl private constructor(
         })
     }
 
-    override fun getCurrentWeather(
+    fun getCurrentWeather(
         cityName: String
     ) {
         startApiCall({
@@ -64,7 +43,7 @@ class CurrentWeatherRepoImpl private constructor(
         })
     }
 
-    override fun testHomeRepo() {
+    fun testHomeRepo() {
         Log.d("", "")
     }
 }

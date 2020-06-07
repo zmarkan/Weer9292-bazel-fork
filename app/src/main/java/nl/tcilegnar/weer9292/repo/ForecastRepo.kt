@@ -6,18 +6,16 @@ import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.network.model.response.DailyForecastResponse
 import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ForecastRepository : IApiCallRepository<DailyForecast> {
-    fun getDailyForecast(coordinates: Coordinates)
-    fun testForecaseRepo()
-}
+interface IForecastRepo
 
-//@Singleton
-class ForecastRepositoryImpl @Inject constructor(
+@Singleton
+class ForecastRepo @Inject constructor(
     private val weatherService: WeatherServices
-) : ApiCallRepo<DailyForecastResponse, DailyForecast>(), ForecastRepository {
+) : ApiCallRepo<DailyForecastResponse, DailyForecast>(), IForecastRepo {
 
-    override fun getDailyForecast(coordinates: Coordinates) {
+    fun getDailyForecast(coordinates: Coordinates) {
         startApiCall({
             weatherService.getDailyForecast(lat = coordinates.lat, lon = coordinates.lon)
         }, processNetworkResponse = {
@@ -27,7 +25,7 @@ class ForecastRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun testForecaseRepo() {
+    fun testForecaseRepo() {
         Log.d("", "")
     }
 }

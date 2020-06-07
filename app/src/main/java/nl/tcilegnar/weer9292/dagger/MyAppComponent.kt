@@ -8,24 +8,23 @@ import dagger.Component
 import dagger.Module
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import nl.tcilegnar.weer9292.MyApplication
-import nl.tcilegnar.weer9292.dagger.modules.ActivityBindings
+import nl.tcilegnar.weer9292.MyApp
+import nl.tcilegnar.weer9292.dagger.modules.ActivityContributor
 import nl.tcilegnar.weer9292.dagger.modules.ApiModule
-import nl.tcilegnar.weer9292.dagger.modules.RepositoriesModule
+import nl.tcilegnar.weer9292.dagger.modules.RepositoryBindings
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
+        AndroidInjectionModule::class,
+        ActivityContributor::class,
         ApplicationBindings::class,
-        ActivityBindings::class,
-        RepositoriesModule::class,
-        ApiModule::class,
-        AndroidInjectionModule::class
+        RepositoryBindings::class,
+        ApiModule::class
     ]
 )
-
-interface AppComponent : AndroidInjector<MyApplication> {
+interface MyAppComponent : AndroidInjector<MyApp> {
     fun inject(application: Application)
 
     @Component.Builder
@@ -33,7 +32,7 @@ interface AppComponent : AndroidInjector<MyApplication> {
         @BindsInstance
         fun application(application: Application): Builder
 
-        fun build(): AppComponent
+        fun build(): MyAppComponent
     }
 }
 
