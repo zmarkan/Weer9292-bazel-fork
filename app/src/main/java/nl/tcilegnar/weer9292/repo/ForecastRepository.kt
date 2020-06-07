@@ -5,13 +5,15 @@ import nl.tcilegnar.weer9292.model.DailyForecast
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.network.model.response.DailyForecastResponse
+import javax.inject.Inject
 
 interface ForecastRepository : IApiCallRepository<DailyForecast> {
     fun getDailyForecast(coordinates: Coordinates)
     fun testForecaseRepo()
 }
 
-class ForecastRepositoryImpl constructor(
+//@Singleton
+class ForecastRepositoryImpl @Inject constructor(
     private val weatherService: WeatherServices
 ) : ApiCallRepo<DailyForecastResponse, DailyForecast>(), ForecastRepository {
 

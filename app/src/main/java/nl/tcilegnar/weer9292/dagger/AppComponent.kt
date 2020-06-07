@@ -12,9 +12,9 @@ import nl.tcilegnar.weer9292.MyApplication
 import nl.tcilegnar.weer9292.dagger.modules.ActivityBindings
 import nl.tcilegnar.weer9292.dagger.modules.ApiModule
 import nl.tcilegnar.weer9292.dagger.modules.RepositoriesModule
-import nl.tcilegnar.weer9292.dagger.scopes.ApplicationScope
+import javax.inject.Singleton
 
-@ApplicationScope
+@Singleton
 @Component(
     modules = [
         ApplicationBindings::class,

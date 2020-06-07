@@ -7,9 +7,11 @@ import nl.tcilegnar.weer9292.repo.CurrentWeatherRepo
 import nl.tcilegnar.weer9292.repo.CurrentWeatherRepoImpl
 import nl.tcilegnar.weer9292.repo.ForecastRepository
 import nl.tcilegnar.weer9292.repo.ForecastRepositoryImpl
+import javax.inject.Singleton
 
 @Module
 object RepositoriesModule {
+    //    @Singleton
     @JvmStatic
     @Provides
     fun providesCurrentWeatherRepo(
@@ -17,6 +19,7 @@ object RepositoriesModule {
     ): CurrentWeatherRepo =
         CurrentWeatherRepoImpl.getInstance(weatherService)
 
+    @Singleton
     @JvmStatic
     @Provides
     fun providesForecastRepo(
