@@ -14,8 +14,8 @@
     <string name="details_label_temperatures">Temperatures:</string>
     <string name="details_label_temp_current">Current</string>
     <string name="details_label_temp_feel">Feels like</string>
-    <string name="details_label_temp_max">Max. temperature</string>
-    <string name="details_label_temp_min">Min. temperature</string>
+    <string name="details_label_temp_max">Maximum</string>
+    <string name="details_label_temp_min">Minimum</string>
     <string name="details_label_wind">Wind:</string>
     <string name="details_label_wind_speed">Speed</string>
     <string name="details_label_wind_angle">Angle</string>
