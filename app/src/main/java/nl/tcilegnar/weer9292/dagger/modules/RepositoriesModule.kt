@@ -14,15 +14,13 @@ object RepositoriesModule {
     @Provides
     fun providesCurrentWeatherRepo(
         weatherService: WeatherServices
-    ): CurrentWeatherRepo {
-        return CurrentWeatherRepoImpl.getInstance(weatherService)
-    }
+    ): CurrentWeatherRepo =
+        CurrentWeatherRepoImpl.getInstance(weatherService)
 
     @JvmStatic
     @Provides
     fun providesForecastRepo(
         weatherService: WeatherServices
-    ): ForecastRepository {
-        return ForecastRepositoryImpl.getInstance(weatherService)
-    }
+    ): ForecastRepository =
+        ForecastRepositoryImpl.getInstance(weatherService)
 }

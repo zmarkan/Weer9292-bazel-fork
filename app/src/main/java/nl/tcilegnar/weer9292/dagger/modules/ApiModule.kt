@@ -12,18 +12,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiModule {
     @JvmStatic
     @Provides
-    fun providesRetrofit(
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL_WEATHER)
-            .client(NetworkHelper.createClient())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    fun providesRetrofit(): Retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_URL_WEATHER)
+        .client(NetworkHelper.createClient())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
     @JvmStatic
     @Provides
-    fun providesWeatherServices(retrofit: Retrofit): WeatherServices {
-        return retrofit.create(WeatherServices::class.java)
-    }
+    fun providesWeatherServices(retrofit: Retrofit): WeatherServices =
+        retrofit.create(WeatherServices::class.java)
 }

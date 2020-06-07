@@ -18,7 +18,9 @@ class CurrentWeatherRepoImpl private constructor(
         @Volatile
         private var INSTANCE: CurrentWeatherRepoImpl? = null
 
-        fun getInstance(weatherService: WeatherServices): CurrentWeatherRepoImpl {
+        fun getInstance(
+            weatherService: WeatherServices
+        ): CurrentWeatherRepoImpl {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -40,8 +42,6 @@ class CurrentWeatherRepoImpl private constructor(
             WeatherDetails.from(it)
         }, handleError = {
             "Unable to retrieve current weather: something went wrong."
-        }, mockData = {
-            it.mockedCurrentWeatherResponse
         })
     }
 
@@ -59,8 +59,6 @@ class CurrentWeatherRepoImpl private constructor(
             } else {
                 "Unable to retrieve current weather for $cityName: something went wrong."
             }
-        }, mockData = {
-            it.mockedCurrentWeatherResponse
         })
     }
 }

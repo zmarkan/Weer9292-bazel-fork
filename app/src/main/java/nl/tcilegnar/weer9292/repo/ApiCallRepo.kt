@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import nl.tcilegnar.weer9292.network.util.Mocks
 
 private const val TAG_API = "API"
 
@@ -16,9 +15,7 @@ interface IApiCallRepository<ResponseType> {
     val errorMessage: LiveData<String>
 }
 
-abstract class ApiCallRepo<NetworkResponseType, ResponseType>(
-    private val mocks: Mocks = Mocks()
-) : IApiCallRepository<ResponseType> {
+abstract class ApiCallRepo<NetworkResponseType, ResponseType> : IApiCallRepository<ResponseType> {
     private val _response = MutableLiveData<ResponseType?>(null)
     private val _isLoading = MutableLiveData(false)
     private val _errorMessage = MutableLiveData("")
@@ -43,13 +40,12 @@ abstract class ApiCallRepo<NetworkResponseType, ResponseType>(
     protected fun startApiCall(
         startNetworkCall: suspend () -> NetworkResponseType,
         processNetworkResponse: (responseObject: NetworkResponseType) -> ResponseType,
-        handleError: (e: Exception) -> String,
-        mockData: suspend (mocks: Mocks) -> NetworkResponseType
+        handleError: (e: Exception) -> String
     ) {
         startLoading()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val networkResponse = if (mocks.shouldUseMockedData) mockData(mocks) else startNetworkCall()
+                val networkResponse = startNetworkCall()
                 val processedResponse = processNetworkResponse(networkResponse)
                 Log.d(TAG_API, "<--- networkResponse: $networkResponse")
                 Log.d(TAG_API, "<--- processedResponse: $processedResponse")

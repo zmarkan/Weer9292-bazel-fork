@@ -39,8 +39,6 @@ class ForecastRepositoryImpl private constructor(
             DailyForecast.from(it)
         }, handleError = {
             "Unable to retrieve forecast: something went wrong."
-        }, mockData = {
-            it.mockedDailyForecastResponse
         })
     }
 }
