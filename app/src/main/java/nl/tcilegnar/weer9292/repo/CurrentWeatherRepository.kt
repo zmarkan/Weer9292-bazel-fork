@@ -8,12 +8,10 @@ import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
-interface ICurrentWeatherRepo
-
 @Singleton
 class CurrentWeatherRepo @Inject constructor(
     private val weatherService: WeatherServices
-) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>(), ICurrentWeatherRepo {
+) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>() {
     fun getCurrentWeather(
         coordinates: Coordinates
     ) {

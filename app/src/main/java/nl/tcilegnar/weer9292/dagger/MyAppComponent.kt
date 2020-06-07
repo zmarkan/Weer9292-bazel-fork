@@ -11,7 +11,6 @@ import dagger.android.AndroidInjector
 import nl.tcilegnar.weer9292.MyApp
 import nl.tcilegnar.weer9292.dagger.modules.ActivityContributor
 import nl.tcilegnar.weer9292.dagger.modules.ApiModule
-import nl.tcilegnar.weer9292.dagger.modules.RepositoryBindings
 import javax.inject.Singleton
 
 @Singleton
@@ -20,7 +19,6 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         ActivityContributor::class,
         ApplicationBindings::class,
-        RepositoryBindings::class,
         ApiModule::class
     ]
 )

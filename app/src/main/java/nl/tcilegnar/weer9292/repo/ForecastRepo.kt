@@ -8,12 +8,10 @@ import nl.tcilegnar.weer9292.network.model.response.DailyForecastResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
-interface IForecastRepo
-
 @Singleton
 class ForecastRepo @Inject constructor(
     private val weatherService: WeatherServices
-) : ApiCallRepo<DailyForecastResponse, DailyForecast>(), IForecastRepo {
+) : ApiCallRepo<DailyForecastResponse, DailyForecast>() {
 
     fun getDailyForecast(coordinates: Coordinates) {
         startApiCall({
