@@ -1,4 +1,4 @@
-package nl.tcilegnar.weer9292.dagger.modules.helpers
+package nl.tcilegnar.weer9292.network.model
 
 import nl.tcilegnar.weer9292.network.model.response.*
 

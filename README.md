@@ -3,7 +3,7 @@ A simple weather app created for some nice guys at 9292, to check whether they c
 
 *Important note for the 9292 devs:*
 Run the Acceptance build to test the app.
-If the API calls fail because the limit of calls is reached, then Debug can be used, which uses [mocked data](app/src/main/java/nl/tcilegnar/weer9292/network/util/Mocks.kt).
+If the API calls fail because the limit of calls is reached, then Debug can be used, which uses [mocked data](app/src/main/java/nl/tcilegnar/weer9292/network/model/Mocks.kt).
 
 The app was developed using a Nexus 5X emulator in portrait mode and not extensively tested on other devices / tablets / orientations.
 It should scale sufficiently to most other mobiles in portrait though.

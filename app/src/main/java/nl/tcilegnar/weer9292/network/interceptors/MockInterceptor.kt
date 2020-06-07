@@ -1,7 +1,8 @@
-package nl.tcilegnar.weer9292.dagger.modules.helpers
+package nl.tcilegnar.weer9292.network.interceptors
 
 import com.google.gson.Gson
 import nl.tcilegnar.weer9292.BuildConfig
+import nl.tcilegnar.weer9292.network.model.Mocks
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
