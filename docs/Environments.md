@@ -12,7 +12,7 @@ Debug also includes [mocked data](../app/src/main/java/nl/tcilegnar/weer9292/net
 - Testing on Debug is adviced, this is nearly the same as testing the app on a Release buildType.
 However, ProGuard obfuscation can cause issues unnoticable on Debug:
 Obfuscation makes classes 'unreadable', resulting in a crash if these are used for reflection.
-This is the case for eg. request/response models used by Retrofit.
+This is the case for eg. request/response models used by Retrofit and models passed as args for Androidx.navigation.
 To be on the safe side, always test on the Acceptance buildType (which also performs ProGuard obfuscation) before releasing,
 especially when new models were added, or existing ones were moved out of the packages excluded by [ProGuard-rules](../app/proguard-rules.pro).
 
