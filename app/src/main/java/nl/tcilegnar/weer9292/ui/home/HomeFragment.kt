@@ -5,23 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_home.*
 import nl.tcilegnar.weer9292.R
+import nl.tcilegnar.weer9292.dagger.factories.ViewModelFactory
 import nl.tcilegnar.weer9292.model.Temperatures
 import nl.tcilegnar.weer9292.model.Weather
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 import nl.tcilegnar.weer9292.ui.BaseBottomNavigationFragment
 import nl.tcilegnar.weer9292.ui.home.HomeFragmentDirections.Companion.actionHomeFragmentToWeatherDetailsFragment
+import nl.tcilegnar.weer9292.util.extensions.getViewModel
 
-class HomeFragment : BaseBottomNavigationFragment() {
+class HomeFragment(
+    private val homeVMF: ViewModelFactory<HomeViewModel>
+) : BaseBottomNavigationFragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = getViewModel(homeVMF, HomeViewModel::class.java)
         temperaturePrefs = TemperaturePrefs(requireContext())
     }
 

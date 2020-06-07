@@ -6,16 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_forecast.*
 import nl.tcilegnar.weer9292.R
+import nl.tcilegnar.weer9292.dagger.factories.ViewModelFactory
 import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
 import nl.tcilegnar.weer9292.ui.BaseBottomNavigationFragment
 import nl.tcilegnar.weer9292.ui.customview.ForecastColumn
+import nl.tcilegnar.weer9292.util.extensions.getViewModel
 
-class ForecastFragment : BaseBottomNavigationFragment() {
+class ForecastFragment(
+    private val forecastVMF: ViewModelFactory<ForecastViewModel>
+) : BaseBottomNavigationFragment() {
     private lateinit var forecastViewModel: ForecastViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
 
@@ -23,7 +26,7 @@ class ForecastFragment : BaseBottomNavigationFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        forecastViewModel = ViewModelProvider(this).get(ForecastViewModel::class.java)
+        forecastViewModel = getViewModel(forecastVMF, ForecastViewModel::class.java)
         temperaturePrefs = TemperaturePrefs(requireContext())
     }
 

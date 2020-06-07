@@ -10,15 +10,21 @@ import nl.tcilegnar.weer9292.network.util.Mocks
 
 private const val TAG_API = "API"
 
+interface IApiCallRepository<ResponseType> {
+    val response: LiveData<ResponseType?>
+    val isLoading: LiveData<Boolean>
+    val errorMessage: LiveData<String>
+}
+
 abstract class ApiCallRepo<NetworkResponseType, ResponseType>(
-    private val mocks: Mocks
-) {
+    private val mocks: Mocks = Mocks()
+) : IApiCallRepository<ResponseType> {
     private val _response = MutableLiveData<ResponseType?>(null)
     private val _isLoading = MutableLiveData(false)
     private val _errorMessage = MutableLiveData("")
-    val response: LiveData<ResponseType?> = _response
-    val isLoading: LiveData<Boolean> = _isLoading
-    val errorMessage: LiveData<String> = _errorMessage
+    override val response: LiveData<ResponseType?> = _response
+    override val isLoading: LiveData<Boolean> = _isLoading
+    override val errorMessage: LiveData<String> = _errorMessage
 
     private fun startLoading() {
         _isLoading.postValue(true)

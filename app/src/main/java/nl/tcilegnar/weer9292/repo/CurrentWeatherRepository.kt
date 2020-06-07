@@ -1,35 +1,37 @@
 package nl.tcilegnar.weer9292.repo
 
 import nl.tcilegnar.weer9292.model.WeatherDetails
-import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
-import nl.tcilegnar.weer9292.network.util.Mocks
 
-class CurrentWeatherRepo private constructor(
-    private val weatherService: WeatherServices = WeatherApi.getInstance().service,
-    mocks: Mocks = Mocks()
-) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>(mocks) {
+interface CurrentWeatherRepo : IApiCallRepository<WeatherDetails> {
+    fun getCurrentWeather(coordinates: Coordinates)
+    fun getCurrentWeather(cityName: String)
+}
+
+class CurrentWeatherRepoImpl private constructor(
+    private val weatherService: WeatherServices
+) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>(), CurrentWeatherRepo {
     // Quick singleton implementation
     companion object {
         @Volatile
-        private var INSTANCE: CurrentWeatherRepo? = null
+        private var INSTANCE: CurrentWeatherRepoImpl? = null
 
-        fun getInstance(): CurrentWeatherRepo {
+        fun getInstance(weatherService: WeatherServices): CurrentWeatherRepoImpl {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
             }
             synchronized(this) {
-                val instance = CurrentWeatherRepo()
+                val instance = CurrentWeatherRepoImpl(weatherService)
                 INSTANCE = instance
                 return instance
             }
         }
     }
 
-    fun getCurrentWeather(
+    override fun getCurrentWeather(
         coordinates: Coordinates
     ) {
         startApiCall({
@@ -43,7 +45,7 @@ class CurrentWeatherRepo private constructor(
         })
     }
 
-    fun getCurrentWeather(
+    override fun getCurrentWeather(
         cityName: String
     ) {
         startApiCall({
