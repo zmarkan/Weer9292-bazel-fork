@@ -1,15 +1,8 @@
-package nl.tcilegnar.weer9292.network.util
+package nl.tcilegnar.weer9292.network.model
 
-import nl.tcilegnar.weer9292.BuildConfig
 import nl.tcilegnar.weer9292.network.model.response.*
 
-class Mocks(
-    /**
-     * Easily turn on/off real API call vs. mock responses, to prevent hitting the limit of 100 calls a day on a free account:
-     * https://rapidapi.com/community/api/open-weather-map/pricing
-     */
-    val shouldUseMockedData: Boolean = BuildConfig.DEBUG
-) {
+class Mocks {
     val mockedCurrentWeatherResponse = CurrentWeatherResponse(
         1590940089,
         WeatherProperties(17.79, 14.86, 17.22, 18.33, 1023, 44),
@@ -19,6 +12,23 @@ class Mocks(
         Sys(2004348, "NL", 1590895545, 1590954547),
         "Mock Utrecht",
         2745912
+    )
+
+    val mockedCurrentWeatherSearchResponse = CurrentWeatherSearchResponse(
+        listOf(
+            // First result is Tokyo (mock data is nonesense, but we can differentiate it from Utrecht from mockedCurrentWeatherResponse)
+            CurrentWeatherResponse(
+                1590940089,
+                WeatherProperties(27.79, 22.86, 21.22, 29.33, 1023, 44),
+                listOf(WeatherType(800, "Clear", "clear sky")),
+                Wind(1.79, 60, 5.81),
+                Coordinates.get9292HQ(), // whatever!
+                Sys(2004348, "JP", 1590895545, 1590954547),
+                "Mock Tokyo",
+                2745912
+            ),
+            mockedCurrentWeatherResponse
+        )
     )
 
     val mockedDailyForecastResponse = DailyForecastResponse(

@@ -7,23 +7,37 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.AndroidInjection
 import nl.tcilegnar.weer9292.R
+import nl.tcilegnar.weer9292.dagger.factories.InitializerFragmentFactory
+import nl.tcilegnar.weer9292.dagger.factories.ViewModelFactory
+import nl.tcilegnar.weer9292.dagger.factories.addInitializer
 import nl.tcilegnar.weer9292.model.TemperatureUnit
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.storage.TemperaturePrefs
+import nl.tcilegnar.weer9292.ui.forecast.ForecastFragment
+import nl.tcilegnar.weer9292.ui.forecast.ForecastViewModel
+import nl.tcilegnar.weer9292.ui.home.HomeFragment
 import nl.tcilegnar.weer9292.ui.home.HomeViewModel
+import nl.tcilegnar.weer9292.util.extensions.getViewModel
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnQueryTextListener {
     companion object {
         private val defaultCoordinates = Coordinates.get9292HQ()
     }
+
+    @Inject
+    lateinit var homeVMF: ViewModelFactory<HomeViewModel>
+
+    @Inject
+    lateinit var forecastVMF: ViewModelFactory<ForecastViewModel>
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var temperaturePrefs: TemperaturePrefs
@@ -32,9 +46,16 @@ class MainActivity : AppCompatActivity(), OnQueryTextListener {
     private var currentTitle: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+
+        supportFragmentManager.fragmentFactory = InitializerFragmentFactory().apply {
+            addInitializer { HomeFragment(homeVMF) }
+            addInitializer { ForecastFragment(forecastVMF) }
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = getViewModel(homeVMF, HomeViewModel::class.java)
         temperaturePrefs = TemperaturePrefs(this)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)

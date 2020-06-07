@@ -1,34 +1,16 @@
 package nl.tcilegnar.weer9292.repo
 
 import nl.tcilegnar.weer9292.model.WeatherDetails
-import nl.tcilegnar.weer9292.network.WeatherApi
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
-import nl.tcilegnar.weer9292.network.util.Mocks
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CurrentWeatherRepo private constructor(
-    private val weatherService: WeatherServices = WeatherApi.getInstance().service,
-    mocks: Mocks = Mocks()
-) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>(mocks) {
-    // Quick singleton implementation
-    companion object {
-        @Volatile
-        private var INSTANCE: CurrentWeatherRepo? = null
-
-        fun getInstance(): CurrentWeatherRepo {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = CurrentWeatherRepo()
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }
-
+@Singleton
+class CurrentWeatherRepo @Inject constructor(
+    private val weatherService: WeatherServices
+) : ApiCallRepo<CurrentWeatherResponse, WeatherDetails>() {
     fun getCurrentWeather(
         coordinates: Coordinates
     ) {
@@ -38,8 +20,6 @@ class CurrentWeatherRepo private constructor(
             WeatherDetails.from(it)
         }, handleError = {
             "Unable to retrieve current weather: something went wrong."
-        }, mockData = {
-            it.mockedCurrentWeatherResponse
         })
     }
 
@@ -57,8 +37,6 @@ class CurrentWeatherRepo private constructor(
             } else {
                 "Unable to retrieve current weather for $cityName: something went wrong."
             }
-        }, mockData = {
-            it.mockedCurrentWeatherResponse
         })
     }
 }

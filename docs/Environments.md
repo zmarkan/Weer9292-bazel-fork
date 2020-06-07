@@ -6,7 +6,7 @@
 This means it also includes ProGuard obfuscation, which lacks in the debug buildType.
 - Debug is used to develop with. ***Try to use this BuildConfig as much as possible*** to prevent using the production environment (which pollutes analytics!).
 Compared to Acceptance, Debug builds faster (no ProGuard obfuscation & optimalization) and is debuggable (incl. logs).
-Debug also includes [mocked data](../app/src/main/java/nl/tcilegnar/weer9292/network/util/Mocks.kt).
+Debug also includes [mocked data](../app/src/main/java/nl/tcilegnar/weer9292/network/model/Mocks.kt).
 
 ##### Important note for testing:
 - Testing on Debug is adviced, this is nearly the same as testing the app on a Release buildType.

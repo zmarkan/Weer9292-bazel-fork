@@ -4,9 +4,10 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
 import nl.tcilegnar.weer9292.repo.CurrentWeatherRepo
+import javax.inject.Inject
 
-class HomeViewModel(
-    private val currentWeatherRepo: CurrentWeatherRepo = CurrentWeatherRepo.getInstance()
+class HomeViewModel @Inject constructor(
+    private val currentWeatherRepo: CurrentWeatherRepo
 ) : ViewModel() {
     val currentWeatherDetails = currentWeatherRepo.response
     val currentWeather = Transformations.map(currentWeatherDetails) {
