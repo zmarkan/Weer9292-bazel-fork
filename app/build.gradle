@@ -25,6 +25,7 @@ android {
         buildConfigField "String", "BASE_URL_WEATHER", "\"https://community-open-weather-map.p.rapidapi.com/\""
         buildConfigField "String", "RAPID_API_HOST", "\"community-open-weather-map.p.rapidapi.com\""
         buildConfigField "String", "RAPID_API_KEY", RAPID_API_KEY
+        buildConfigField "boolean", "MOCK_API_RESPONSE", "false"
     }
 
     signingConfigs {
@@ -57,6 +58,7 @@ android {
             signingConfig signingConfigs.debug
             applicationIdSuffix ".debug"
             versionNameSuffix "-DEBUG"
+            buildConfigField "boolean", "MOCK_API_RESPONSE", MOCK_API_RESPONSE_DEBUG
         }
     }
 

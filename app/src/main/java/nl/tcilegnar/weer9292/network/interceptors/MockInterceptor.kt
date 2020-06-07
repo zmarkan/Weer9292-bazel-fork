@@ -18,7 +18,7 @@ class MockInterceptor(
     private val gson: Gson = Gson()
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.MOCK_API_RESPONSE) {
             val uri = chain.request().url.toUri().toString()
             val responseString = gson.toJson(
                 when {

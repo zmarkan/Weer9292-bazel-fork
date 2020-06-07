@@ -14,6 +14,7 @@ It should scale sufficiently to most other mobiles in portrait though.
 - The Debug and Acceptance builds can be run without additional setup.
 - Release builds require signing - so some additional manual setup - which is described [here](./docs/Signing.md)
 - Similarly it's possible to use your own local `RAPID_API_KEY`, or simply change it [here](gradle.properties) temporarily.
+    - You can do the same for `MOCK_API_RESPONSE_DEBUG`, in case you'd like to use the real API on Debug instead.
 
 
 
