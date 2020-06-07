@@ -43,8 +43,6 @@ class ForecastFragment(
                 setColumnData(it.weathers)
             }
         })
-
-        forecastViewModel.testForecast()
     }
 
     private fun setColumnData(dailyWeatherDetails: List<WeatherDetails>) {

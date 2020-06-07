@@ -1,6 +1,5 @@
 package nl.tcilegnar.weer9292.repo
 
-import android.util.Log
 import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
@@ -39,9 +38,5 @@ class CurrentWeatherRepo @Inject constructor(
                 "Unable to retrieve current weather for $cityName: something went wrong."
             }
         })
-    }
-
-    fun testHomeRepo() {
-        Log.d("", "")
     }
 }

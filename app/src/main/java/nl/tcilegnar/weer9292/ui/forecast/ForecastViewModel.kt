@@ -8,17 +8,12 @@ import javax.inject.Inject
 
 class ForecastViewModel @Inject constructor(
     private val forecastRepo: ForecastRepo,
-    private val currentWeatherRepo: CurrentWeatherRepo
+    currentWeatherRepo: CurrentWeatherRepo
 ) : ViewModel() {
     val forecast = Transformations.switchMap(currentWeatherRepo.response) {
         it?.let {
             forecastRepo.getDailyForecast(it.basicWeather.location.coordinates)
         }
         forecastRepo.response
-    }
-
-    fun testForecast() {
-        currentWeatherRepo.testHomeRepo()
-        forecastRepo.testForecaseRepo()
     }
 }

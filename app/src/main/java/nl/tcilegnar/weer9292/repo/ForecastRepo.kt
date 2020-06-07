@@ -1,6 +1,5 @@
 package nl.tcilegnar.weer9292.repo
 
-import android.util.Log
 import nl.tcilegnar.weer9292.model.DailyForecast
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
@@ -21,9 +20,5 @@ class ForecastRepo @Inject constructor(
         }, handleError = {
             "Unable to retrieve forecast: something went wrong."
         })
-    }
-
-    fun testForecaseRepo() {
-        Log.d("", "")
     }
 }
