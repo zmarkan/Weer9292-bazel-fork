@@ -14,6 +14,8 @@ data class Coordinates(
     val lon: Double
 ) : Parcelable {
     companion object {
-        fun get9292HQ(): Coordinates = Coordinates(lat = 52.082491, lon = 5.117606)
+        fun get9292HQ() = Coordinates(lat = 52.082491, lon = 5.117606)
     }
+
+    fun getShortDescription() = "lat: $lat\nlon: $lon"
 }
