@@ -18,7 +18,7 @@ This location could also be the [keystores](../keystores) directory.
 
 
 ## Notes:
-- Passwords and the `release.keystore` can be requested from other developers or found on the buildserver.
+- Passwords and the `release.keystore` can be requested from Patrick.
 - The values in the global `gradle.properties` file will override the project values located [here](../gradle.properties).
 The global `gradle.properties` is located in the `USER_HOME/.gradle` directory, not in this project, because the
 location of the `keystore.properties` can be different for each developer, and we don't want to store these in source control.
