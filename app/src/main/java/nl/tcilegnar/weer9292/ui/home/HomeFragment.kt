@@ -46,6 +46,8 @@ class HomeFragment(
                 setData(currentWeather)
             }
         })
+
+        homeViewModel.testHome()
     }
 
     private fun setData(weather: Weather) {

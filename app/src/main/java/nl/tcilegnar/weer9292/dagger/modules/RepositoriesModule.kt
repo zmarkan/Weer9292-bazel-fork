@@ -22,5 +22,5 @@ object RepositoriesModule {
     fun providesForecastRepo(
         weatherService: WeatherServices
     ): ForecastRepository =
-        ForecastRepositoryImpl.getInstance(weatherService)
+        ForecastRepositoryImpl(weatherService)
 }

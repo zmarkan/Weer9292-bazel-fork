@@ -1,5 +1,6 @@
 package nl.tcilegnar.weer9292.repo
 
+import android.util.Log
 import nl.tcilegnar.weer9292.model.WeatherDetails
 import nl.tcilegnar.weer9292.network.WeatherServices
 import nl.tcilegnar.weer9292.network.model.response.Coordinates
@@ -8,6 +9,7 @@ import nl.tcilegnar.weer9292.network.model.response.CurrentWeatherResponse
 interface CurrentWeatherRepo : IApiCallRepository<WeatherDetails> {
     fun getCurrentWeather(coordinates: Coordinates)
     fun getCurrentWeather(cityName: String)
+    fun testHomeRepo()
 }
 
 class CurrentWeatherRepoImpl private constructor(
@@ -60,5 +62,9 @@ class CurrentWeatherRepoImpl private constructor(
                 "Unable to retrieve current weather for $cityName: something went wrong."
             }
         })
+    }
+
+    override fun testHomeRepo() {
+        Log.d("", "")
     }
 }
