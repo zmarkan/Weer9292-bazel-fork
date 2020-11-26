@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@0.2.1
+  android: circleci/android@0.2.3
 
 jobs:
   build:
@@ -9,5 +9,7 @@ jobs:
 
     steps:
       - checkout
+      - android/accept-licenses
       - run:
-          command: ./gradlew build
+          command: ./gradlew check # Run lint and unit tests, but not emulator tests
+
