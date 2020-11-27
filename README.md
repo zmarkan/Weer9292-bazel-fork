@@ -1,3 +1,14 @@
+# Exercise in migrating Gradle into Bazel build
+
+WIP.
+
+- Set up bazel
+- bazel sync
+- bazel info workspace - to check this is all configured
+- bazel build //app/src:main
+
+Based and forked off on the below project 👇👇👇
+
 # weer9292
 A simple weather app created for some nice guys at 9292, to check whether they can lunch outside without getting soaked
 

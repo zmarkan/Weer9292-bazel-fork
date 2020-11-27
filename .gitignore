@@ -99,3 +99,10 @@ lint/tmp/
 
 # Custom
 docs/local/*
+
+
+# bazel shizz
+bazel-out
+bazel-testlogs
+bazel-Weer9292Bazel
+bazel-bin
